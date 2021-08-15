@@ -1,0 +1,269 @@
+name: afrimash
+description: A new Flutter project.
+
+# The following line prevents the package from being accidentally published to
+# pub.dev using `pub publish`. This is preferred for private packages.
+publish_to: "none" # Remove this line if you wish to publish to pub.dev
+
+# The following defines the version and build number for your application.
+# A version number is three numbers separated by dots, like 1.2.43
+# followed by an optional build number separated by a +.
+# Both the version and the builder number may be overridden in flutter
+# build by specifying --build-name and --build-number, respectively.
+# In Android, build-name is used as versionName while build-number used as versionCode.
+# Read more about Android versioning at https://developer.android.com/studio/publish/versioning
+# In iOS, build-name is used as CFBundleShortVersionString while build-number used as CFBundleVersion.
+# Read more about iOS versioning at
+# https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
+version: 1.0.0+1
+
+environment:
+  sdk: ">=2.7.0 <3.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  # The following adds the Cupertino Icons font to your application.
+  # Use with the CupertinoIcons class for iOS style icons.
+  # Base
+  pedantic: ^1.11.0
+  intl: 0.17.0
+
+  # COMMON
+  inspireui:
+    path: ./modules/common_library
+  rubber:
+    git:
+      url: git://github.com/inspireui/rubber
+  country_pickers:
+    git:
+      url: git://github.com/inspireui/country_pickers.git
+
+  # FIREBASE PACKAGES
+  # firebase_core: 1.1.0
+  # firebase_analytics: 8.0.2
+  # firebase_auth: 1.1.2
+  # cloud_firestore: 1.0.7
+  # firebase_remote_config: 0.9.0-dev.0
+  # firebase_dynamic_links: 2.0.2
+  # firestore_ui:
+  #   git:
+  #     url: git://github.com/inspireui/firestore_ui.git
+
+  # STATE MANAGEMENT
+  provider: 5.0.0
+  get_it: 6.1.1
+  event_bus: 2.0.0
+
+  # SPLASH SCREEN, ONBOARDING
+  animated_splash: 1.0.0
+  custom_splash: 0.0.2
+  flare_splash_screen: 4.0.0
+  rive: 0.7.3
+  liquid_swipe: 2.1.0
+
+  # UI
+  animated_text_kit: 4.2.1
+  animations: 2.0.0
+  awesome_card: 1.1.5
+  carousel_pro: 1.0.0
+  configurable_expansion_tile: 1.0.0
+  country_code_picker: 2.0.1
+  flash: 1.5.2
+  flutter_spinkit: "^4.1.2"
+  flutter_staggered_grid_view: 0.4.0
+  flutter_statusbarcolor: 0.2.3
+  flutter_swiper: 1.1.6
+  visibility_detector: 0.2.0
+  font_awesome_flutter: 9.0.0
+  file_picker: 3.0.1
+  page_indicator: 0.4.1
+  percent_indicator: 3.0.1
+  pull_to_refresh: 1.6.5
+  rate_my_app: ^1.1.0+1
+  flutter_rating_bar: ^4.0.0
+  cupertino_icons: any
+  implicitly_animated_reorderable_list: 0.4.0
+  pin_code_fields: 7.0.0
+  badges: ^2.0.1
+
+  # WEB TOOLS
+  html_unescape: 2.0.0
+  webview_flutter: 2.0.4
+  flutter_widget_from_html: 0.6.0
+  flutter_webview_plugin: 0.3.11
+  responsive_builder: 0.4.1
+
+  # MAP
+  # google_maps_flutter: 2.0.3
+  # location: 2.3.5
+
+  # STORAGE
+  localstorage: ^4.0.0+1
+
+  # CONNECTIVITY
+  http: 0.13.2
+  http_auth: 1.0.0
+  uni_links: 0.4.0
+  share: 2.0.1
+
+  # AUTHENTICATION
+  # apple_sign_in: 0.1.0
+  # flutter_facebook_login: 3.0.0
+  # google_sign_in: 5.0.2
+  # sms_autofill: 2.0.0
+
+  # PUSH NOTIFICATION
+  # firebase_messaging: 9.1.3
+  notification_permissions: 0.5.0
+  onesignal_flutter: 2.6.3
+
+  # PAYMENTS
+  stripe_sdk:
+    git:
+      url: git://github.com/inspireui/stripe-sdk.git
+  # razorpay_flutter: 1.2.5
+
+  # IMAGES
+  transparent_image: 2.0.0
+  extended_image: 4.0.1
+  fwfh_cached_network_image: 0.6.0
+  image_picker: 0.7.4
+  multi_image_picker: 4.8.0
+  flutter_image_compress: 1.0.0
+
+  # VIDEOS
+  video_player: 2.1.1
+  youtube_player_iframe:
+    git:
+      url: git://github.com/inspireui/youtube_player_flutter.git
+      path: packages/youtube_player_iframe
+
+  # ADS
+  facebook_audience_network: 0.7.1
+  # google_mobile_ads: 0.12.1+1
+
+  # TOOLS
+  auto_size_text: 2.1.0
+  google_fonts: 2.1.0
+  random_string: 2.1.0
+  json_annotation: 4.0.1
+  timeago: 3.0.2
+  universal_platform: ^1.0.0-nullsafety
+  uuid: 3.0.4
+  validate: 1.7.0
+  vector_math: any
+  async: 2.5.0
+  easy_debounce: 2.0.0
+  charts_flutter: 0.10.0
+  devicelocale: ^0.4.1
+  http_interceptor: ^0.3.3
+  flutter_secure_storage: ^4.2.0
+  dropdown_banner: ^1.4.0
+  flutter_paystack: ^1.0.5+1
+
+dev_dependencies:
+  flutter_driver:
+    sdk: flutter
+  flutter_test:
+    sdk: flutter
+    version: any
+  flutter_localizations:
+    sdk: flutter
+  test: any
+  flutter_launcher_icons: 0.8.1
+  mockito: ^4.1.1 # Testing
+#  vm_service: 5.5.0
+
+## Enable To run json serializer, run:
+## flutter pub run build_runner build --build-filter="lib/models/serializers/*.dart" --delete-conflicting-outputs
+## flutter pub run build_runner serve --build-filter="lib/models/serializers/*.dart"
+#  build_runner: 1.12.2
+#  json_serializable: 4.1.0
+
+### Override the library to support Flutter 2.0
+### Note: This will show the warning but will not impact to the app features 👍
+dependency_overrides:
+  intl: 0.17.0
+  http: 0.13.2
+  crypto: 3.0.1
+  path_provider: 2.0.1
+  uuid: 3.0.4
+  http_parser: 4.0.0
+  pedantic: 1.11.0
+  flutter_svg: 0.19.3
+  url_launcher: 6.0.1
+  cached_network_image: 2.5.1
+  modal_bottom_sheet: 2.0.0
+  args: 2.1.0
+  analyzer: ^0.41.2
+
+# Run this script to generate the app icon: flutter pub run flutter_launcher_icons:main
+flutter_icons:
+  android: "launcher_icon"
+  ios: true
+  image_path: "assets/images/app_icon.png"
+
+# For information on the generic Dart part of this file, see the
+# following page: https://dart.dev/tools/pub/pubspec
+
+# The following section is specific to Flutter.
+flutter:
+  # The following line ensures that the Material Icons font is
+  # included with your application, so that you can use the icons in
+  # the material Icons class.
+  uses-material-design: true
+
+  # To add assets to your application, add an assets section, like this:
+  assets:
+    - assets/icons/categories/
+    - assets/icons/credit_cards/
+    - assets/icons/tabs/
+    - assets/icons/payment/
+    - assets/images/
+    - assets/images/static/
+    - assets/images/country/
+    - assets/images/favicon/
+    - assets/html/
+    - assets/google_fonts/
+  fonts:
+    - family: Feather
+      fonts:
+        - asset: assets/fonts/Feather.ttf
+    - family: SF Pro Display
+      fonts:
+        - asset: assets/fonts/SF-Pro-Display-Semibold.otf
+          weight: 700
+
+  # An image asset can refer to one or more resolution-specific "variants", see
+  # https://flutter.dev/assets-and-images/#resolution-aware.
+
+  # For details regarding adding assets from package dependencies, see
+  # https://flutter.dev/assets-and-images/#from-packages
+
+  # To add custom fonts to your application, add a fonts section here,
+  # in this "flutter" section. Each entry in this list should have a
+  # "family" key with the font family name, and a "fonts" key with a
+  # list giving the asset and other descriptors for the font. For
+  # example:
+  # fonts:
+  #   - family: Schyler
+  #     fonts:
+  #       - asset: fonts/Schyler-Regular.ttf
+  #       - asset: fonts/Schyler-Italic.ttf
+  #         style: italic
+  #   - family: Trajan Pro
+  #     fonts:
+  #       - asset: fonts/TrajanPro.ttf
+  #       - asset: fonts/TrajanPro_Bold.ttf
+  #         weight: 700
+  #
+  # For details regarding fonts from package dependencies,
+  # see https://flutter.dev/custom-fonts/#from-packages
+flutter_intl:
+  enabled: true
+analyzer:
+  strong-mode: true
+  language:
+    enableSuperMixins: true
