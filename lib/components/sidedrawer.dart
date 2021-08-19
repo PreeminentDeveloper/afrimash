@@ -1,5 +1,7 @@
 import 'package:afrimash/model/main_app_provider.dart';
 import 'package:afrimash/screens/Orders/special_order.dart';
+import 'package:afrimash/screens/account/about_us.dart';
+import 'package:afrimash/screens/account/contact_us.dart';
 import 'package:afrimash/screens/home/categories.dart';
 import 'package:afrimash/screens/home/home.dart';
 import 'package:afrimash/screens/products/browsing_histor.dart';
@@ -169,12 +171,32 @@ class _SideDrawerState extends State<SideDrawer> {
                                     builder: (context) => BrowsingHistory())),
                           ),
                           ListTile(
+                            leading: const Icon(Icons.contact_mail_outlined,
+                                size: 20),
+                            title: Text('Contact Us'),
+                            // onTap: () => pushNavigation(RouteList.cart),
+                            onTap: () => Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => ContactUS())),
+                          ),
+                          ListTile(
+                            leading: const Icon(Icons.contact_support_outlined,
+                                size: 20),
+                            title: Text('About Us'),
+                            // onTap: () => pushNavigation(RouteList.cart),
+                            onTap: () => Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => AboutUs())),
+                          ),
+                          ListTile(
                             onTap: () async {
                               if (token != null) {
                                 setState(() => loading = true);
                                 prefs = await SharedPreferences.getInstance();
                                 if (prefs.containsKey('token')) {
-                                  prefs.clear();
+                                  prefs.remove('token');
                                   _displayMessage("Logout successfully",
                                       context, Colors.red);
                                   Navigator.pop(context);

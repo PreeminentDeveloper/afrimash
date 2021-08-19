@@ -248,7 +248,7 @@ class CartScreenState extends State<CartScren> {
                                         cartList.clear();
                                         totalPrice = 0.0;
                                       }
-                                      prefs.clear();
+                                      prefs.remove('item');
                                     }
 
                                     loading = false;
@@ -345,7 +345,7 @@ class CartScreenState extends State<CartScren> {
                                                       setState(() {
                                                         if (prefs.containsKey(
                                                             'item')) {
-                                                          prefs.clear();
+                                                          prefs.remove('item');
                                                           cartList.clear();
                                                           print(
                                                               "Preferences cleared");

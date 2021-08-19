@@ -54,11 +54,11 @@ class ProductListingState extends State<ProductListing> {
                       itemBuilder: (BuildContext context, int index) {
                         return GestureDetector(
                             onTap: () {
-                              // Navigator.push(
-                              //     context,
-                              //     MaterialPageRoute(
-                              //         builder: (context) => ProductSingle(
-                              //             widget.products[index])));
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => ProductSingle(
+                                          data: widget.products[index])));
                             },
                             child: Container(
                                 width: MediaQuery.of(context).size.width / 2,
@@ -78,9 +78,14 @@ class ProductListingState extends State<ProductListing> {
                                             image: DecorationImage(
                                                 fit: BoxFit.cover,
                                                 image: NetworkImage(widget
-                                                    .products[index]
-                                                    .productImages[0]
-                                                    .imageUrl))),
+                                                        .products[index]
+                                                        .productImages
+                                                        .isEmpty
+                                                    ? "https://st3.depositphotos.com/23594922/31822/v/600/depositphotos_318221368-stock-illustration-missing-picture-page-for-website.jpg"
+                                                    : widget
+                                                        .products[index]
+                                                        .productImages[0]
+                                                        .imageUrl))),
                                         child: Column(
                                           crossAxisAlignment:
                                               CrossAxisAlignment.end,

@@ -58,9 +58,9 @@ class MakePayment {
       if (response.status == true) {
         Navigator.pushReplacement(
             ctx, MaterialPageRoute(builder: (context) => SuccessScreen()));
-        prefs = await SharedPreferences.getInstance();
-        List<dynamic> stringList = json.decode(prefs.getString('item'));
-        stringList.clear();
+        // prefs = await SharedPreferences.getInstance();
+        // List<dynamic> stringList = json.decode(prefs.getString('item'));
+        // stringList.clear();
       } else {
         print("Transaction failed");
       }

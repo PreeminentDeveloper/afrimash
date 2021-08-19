@@ -123,7 +123,7 @@ class ProductViewState extends State<ProductView> {
     }
   }
 
-  dialogBox(String content, Function onPressed) {
+  dialogBox(String content) {
     showDialog(
         context: context,
         builder: (context) {
@@ -131,13 +131,51 @@ class ProductViewState extends State<ProductView> {
             title: Text("Message"),
             content: Text(content),
             actions: <Widget>[
-              FlatButton(
-                child: Text('OK', style: TextStyle(color: Colors.red)),
-                onPressed: onPressed,
+              Row(
+                children: [
+                  TextButton(
+                      child: Text('No', style: TextStyle(color: Colors.red)),
+                      onPressed: () => Navigator.of(context).pop(false)),
+                  SizedBox(width: 20),
+                  TextButton(
+                      child: Text('Yes', style: TextStyle(color: Colors.red)),
+                      onPressed: () => Navigator.of(context).pop(true)),
+                ],
               ),
             ],
           );
         });
+  }
+
+  Future<bool> _willPopCallback() async {
+    // await showDialog or Show add banners or whatever
+    final shouldPopUp = showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            title: Text("Message"),
+            content: Text("Do you want to Exit?"),
+            actions: <Widget>[
+              Row(
+                children: [
+                  TextButton(
+                      child: Text('No', style: TextStyle(color: Colors.red)),
+                      onPressed: () => Navigator.of(context).pop(false)),
+                  SizedBox(width: 20),
+                  TextButton(
+                      child: Text('Yes', style: TextStyle(color: Colors.red)),
+                      onPressed: () {
+                        Navigator.of(context).pop(true);
+                      })
+                ],
+              ),
+            ],
+          );
+        });
+
+    //  await dialogBox("Doyou want to exit", onPressed)
+    // then
+    return shouldPopUp ?? false;
   }
 
   Widget build(BuildContext context) {
@@ -145,368 +183,112 @@ class ProductViewState extends State<ProductView> {
 
     return loading
         ? kLoadingWidget(context)
-        : Scaffold(
-            key: _drawerKey,
-            backgroundColor: Colors.white,
-            appBar: AppBar(
-              brightness: Theme.of(context).brightness,
-              backgroundColor: Colors.transparent,
-              elevation: 0.0,
-              centerTitle: true,
-              title: Container(
-                  height: 70.0,
-                  // width: 70.0,
-                  child: Image.asset(
-                    'assets/images/logo.png',
-                  )),
-              leading: InkWell(
-                  onTap: () => _drawerKey.currentState.openDrawer(),
-                  child: Icon(Icons.menu, color: const Color(0xff00854e))),
-              actions: [
-                InkWell(
-                    onTap: () {
-                      Navigator.push(context,
-                          MaterialPageRoute(builder: (context) => CartScren()));
-                    },
-                    child: Container(
-                        padding: EdgeInsets.only(right: 15),
-                        child: Badge(
-                          toAnimate: true,
-                          badgeColor: const Color(0xff00854e),
-                          badgeContent: Text("$cartLength"),
-                          child: Icon(Icons.add_shopping_cart_outlined,
-                              color: Colors.black),
-                        ))
-                    // new Icon(Icons.add_shopping_cart_outlined,
-                    //     color: const Color(0xff00854e))
-                    )
-              ],
-            ),
-            drawer: SideDrawer(provider),
-            body: Container(
-              child: SingleChildScrollView(
-                  child: Column(children: [
-                // Categories(),
-                Container(
-                    height: MediaQuery.of(context).size.height * 0.13,
-                    child: ListView.builder(
-                        scrollDirection: Axis.horizontal,
-                        itemCount: 5,
-                        itemBuilder: (BuildContext context, int index) {
-                          return Padding(
-                            padding: EdgeInsets.symmetric(
-                                horizontal: 10.0, vertical: 5),
-                            child: Column(
-                              children: [
-                                Container(
-                                  width: 45,
-                                  height: 45,
-                                  decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(50),
-                                      image: DecorationImage(
-                                          image: AssetImage(
-                                              "assets/images/static/poultry.jpg"),
-                                          fit: BoxFit.cover)),
-                                ),
-                                SizedBox(height: 3),
-                                // text
-                                Text('Poultry', style: Constants.categoryStyle)
-                              ],
-                            ),
-                          );
-                        })),
-                ProductSlides(),
-
-                // trending products title
-                SizedBox(height: 25),
-                Container(
-                    child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text('Trending Products', style: Constants.headerStyle),
+        : WillPopScope(
+            onWillPop: _willPopCallback,
+            child: Scaffold(
+                key: _drawerKey,
+                backgroundColor: Colors.white,
+                appBar: AppBar(
+                  brightness: Theme.of(context).brightness,
+                  backgroundColor: Colors.transparent,
+                  elevation: 0.0,
+                  centerTitle: true,
+                  title: Container(
+                      height: 70.0,
+                      // width: 70.0,
+                      child: Image.asset(
+                        'assets/images/logo.png',
+                      )),
+                  leading: InkWell(
+                      onTap: () => _drawerKey.currentState.openDrawer(),
+                      child: Icon(Icons.menu, color: const Color(0xff00854e))),
+                  actions: [
                     InkWell(
                         onTap: () {
                           Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => ProductListing(
-                                      trendingProductService.trendingProduct)));
+                                  builder: (context) => CartScren()));
                         },
-                        child: Text('See All', style: Constants.linkText))
+                        child: Container(
+                            padding: EdgeInsets.only(right: 15),
+                            child: Badge(
+                              toAnimate: true,
+                              badgeColor: const Color(0xff00854e),
+                              badgeContent: Text("$cartLength"),
+                              child: Icon(Icons.add_shopping_cart_outlined,
+                                  color: Colors.black),
+                            ))
+                        // new Icon(Icons.add_shopping_cart_outlined,
+                        //     color: const Color(0xff00854e))
+                        )
                   ],
-                )),
-
-                // trending products
-                SizedBox(height: 10),
-                Container(
-                    height: MediaQuery.of(context).size.height * 0.45,
-                    child: ListView.builder(
-                        scrollDirection: Axis.horizontal,
-                        itemCount:
-                            trendingProductService.trendingProduct.length ?? 0,
-                        itemBuilder: (BuildContext context, int index) {
-                          var trendingProduct =
-                              trendingProductService.trendingProduct[index];
-                          return InkWell(
-                              onTap: () {
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) => ProductSingle(
-                                            data: trendingProduct)));
-                              },
-                              child: Container(
-                                  padding: EdgeInsets.only(right: 10),
-                                  width: MediaQuery.of(context).size.width / 3,
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Container(
-                                        height:
-                                            MediaQuery.of(context).size.height *
-                                                0.20,
-                                        child: FadeInImage.memoryNetwork(
-                                            placeholder: kTransparentImage,
-                                            fit: BoxFit.cover,
-                                            image: trendingProduct
-                                                    .productImages.isEmpty
-                                                ? "https://st3.depositphotos.com/23594922/31822/v/600/depositphotos_318221368-stock-illustration-missing-picture-page-for-website.jpg"
-                                                : trendingProduct
-                                                    .productImages[0].imageUrl),
-                                      ),
-                                      SizedBox(height: 10),
-                                      Text('${trendingProduct.name}',
-                                          style: Constants.productTitle),
-                                      SizedBox(height: 3),
-                                      Wrap(
-                                        spacing: 8,
-                                        children: [
-                                          Text('₦${trendingProduct.price}',
-                                              style: Constants.productPrice),
-                                          Text('₦${trendingProduct.buyPrice}',
-                                              style: Constants
-                                                  .singleProductPriceStrike),
-                                        ],
-                                      )
-                                    ],
-                                  )));
-                        })),
-                // featured products title
-                Container(
-                    child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text('Featured Products', style: Constants.headerStyle),
-                    InkWell(
-                        onTap: () {
-                          List<Product> product = [];
-                          featuredProductService.featuredProduct.object
-                              .forEach((element) {
-                            var featProduct = Product(
-                                name: element.name,
-                                price: element.price,
-                                productImages: element.productImages,
-                                description: element.description);
-
-                            product.add(featProduct);
-                          });
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) =>
-                                      ProductListing(product)));
-                        },
-                        child: Text('See All', style: Constants.linkText))
-                  ],
-                )),
-                // featured products list
-                SizedBox(height: 10),
-                Container(
-                    height: MediaQuery.of(context).size.height * 0.45,
-                    child: featuredProductService.featuredProduct.object == null
-                        ? Loading()
-                        : ListView.builder(
+                ),
+                drawer: SideDrawer(provider),
+                body: Container(
+                  child: SingleChildScrollView(
+                      child: Column(children: [
+                    // Categories(),
+                    Container(
+                        height: MediaQuery.of(context).size.height * 0.13,
+                        child: ListView.builder(
                             scrollDirection: Axis.horizontal,
-                            itemCount: featuredProductService
-                                    .featuredProduct.object.length ??
-                                0,
+                            itemCount: 5,
                             itemBuilder: (BuildContext context, int index) {
-                              var featuredProduct = featuredProductService
-                                  .featuredProduct.object[index];
-                              return InkWell(
-                                  onTap: () {
-                                    var featProduct = Product(
-                                        id: featuredProduct.id,
-                                        name: featuredProduct.name,
-                                        price: featuredProduct.price,
-                                        productImages:
-                                            featuredProduct.productImages,
-                                        description:
-                                            featuredProduct.description);
-                                    Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) => ProductSingle(
-                                                  data: featProduct,
-                                                )));
-                                  },
-                                  child: Container(
-                                      padding: EdgeInsets.only(right: 10),
-                                      width:
-                                          MediaQuery.of(context).size.width / 2,
-                                      child: Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          Container(
-                                            height: MediaQuery.of(context)
-                                                    .size
-                                                    .height *
-                                                0.28,
-                                            child: FadeInImage.memoryNetwork(
-                                                placeholder: kTransparentImage,
-                                                fit: BoxFit.cover,
-                                                image: featuredProduct
-                                                        .productImages.isEmpty
-                                                    ? "https://st3.depositphotos.com/23594922/31822/v/600/depositphotos_318221368-stock-illustration-missing-picture-page-for-website.jpg"
-                                                    : featuredProduct
-                                                        .productImages[0]
-                                                        .imageUrl),
-                                          ),
-                                          SizedBox(height: 10),
-                                          Text('${featuredProduct.name}',
-                                              style: Constants.productTitle),
-                                          SizedBox(height: 3),
-                                          Wrap(
-                                            spacing: 8,
-                                            children: [
-                                              Text('₦${featuredProduct.price}',
-                                                  style:
-                                                      Constants.productPrice),
-                                              Text(
-                                                  '₦${featuredProduct.buyPrice}',
-                                                  style: Constants
-                                                      .singleProductPriceStrike),
-                                            ],
-                                          )
-                                        ],
-                                      )));
+                              return Padding(
+                                padding: EdgeInsets.symmetric(
+                                    horizontal: 10.0, vertical: 5),
+                                child: Column(
+                                  children: [
+                                    Container(
+                                      width: 45,
+                                      height: 45,
+                                      decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(50),
+                                          image: DecorationImage(
+                                              image: AssetImage(
+                                                  "assets/images/static/poultry.jpg"),
+                                              fit: BoxFit.cover)),
+                                    ),
+                                    SizedBox(height: 3),
+                                    // text
+                                    Text('Poultry',
+                                        style: Constants.categoryStyle)
+                                  ],
+                                ),
+                              );
                             })),
+                    ProductSlides(),
 
-                // // hot deals title
-                // Container(
-                //     child: Row(
-                //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                //   children: [
-                //     Text('Hot Deals', style: Constants.headerStyle),
-                //     InkWell(
-                //         onTap: () {
-                //           Navigator.push(
-                //               context,
-                //               MaterialPageRoute(
-                //                   builder: (context) => ProductListing(
-                //                       trendingProductService.trendingProduct)));
-                //         },
-                //         child: Text('See All', style: Constants.linkText))
-                //   ],
-                // )),
+                    // trending products title
+                    SizedBox(height: 25),
+                    Container(
+                        padding: EdgeInsets.symmetric(horizontal: 10),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text('Trending Products',
+                                style: Constants.headerStyle),
+                            InkWell(
+                                onTap: () {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => ProductListing(
+                                              trendingProductService
+                                                  .trendingProduct)));
+                                },
+                                child:
+                                    Text('See All', style: Constants.linkText))
+                          ],
+                        )),
 
-                // // hot deals list
-                // SizedBox(height: 10),
-                // Container(
-                //     height: MediaQuery.of(context).size.height * 0.45,
-                //     child: featuredProductService.featuredProduct.object == null
-                //         ? Loading()
-                //         : ListView.builder(
-                //             scrollDirection: Axis.horizontal,
-                //             itemCount: featuredProductService
-                //                 .featuredProduct.object.length,
-                //             itemBuilder: (BuildContext context, int index) {
-                //               var featuredProduct = featuredProductService
-                //                   .featuredProduct.object[index];
-                //               return InkWell(
-                //                   onTap: () {
-                //                     var featProduct = Product(
-                //                         name: featuredProduct.name,
-                //                         price: featuredProduct.price,
-                //                         productImages:
-                //                             featuredProduct.productImages,
-                //                         description:
-                //                             featuredProduct.description);
-                //                     Navigator.push(
-                //                         context,
-                //                         MaterialPageRoute(
-                //                             builder: (context) => ProductSingle(
-                //                                   data: featProduct,
-                //                                 )));
-                //                   },
-                //                   child: Container(
-                //                       padding: EdgeInsets.only(right: 10),
-                //                       width:
-                //                           MediaQuery.of(context).size.width / 2,
-                //                       child: Column(
-                //                         crossAxisAlignment:
-                //                             CrossAxisAlignment.start,
-                //                         children: [
-                //                           Container(
-                //                             height: MediaQuery.of(context)
-                //                                     .size
-                //                                     .height *
-                //                                 0.28,
-                //                             decoration: BoxDecoration(
-                //                                 image: DecorationImage(
-                //                                     fit: BoxFit.cover,
-                //                                     image: NetworkImage(
-                //                                         featuredProduct
-                //                                             .productImages[0]
-                //                                             .imageUrl))),
-                //                           ),
-                //                           SizedBox(height: 10),
-                //                           Text('${featuredProduct.name}',
-                //                               style: Constants.productTitle),
-                //                           SizedBox(height: 3),
-                //                           Wrap(
-                //                             spacing: 8,
-                //                             children: [
-                //                               Text('₦${featuredProduct.price}',
-                //                                   style:
-                //                                       Constants.productPrice),
-                //                               Text(
-                //                                   '₦${featuredProduct.buyPrice}',
-                //                                   style: Constants
-                //                                       .singleProductPriceStrike),
-                //                             ],
-                //                           )
-                //                         ],
-                //                       )));
-                //             })),
-
-                // special offer title
-                Container(
-                    child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text('Special Offer', style: Constants.headerStyle),
-                    InkWell(
-                        onTap: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => ProductListing(
-                                      trendingProductService.trendingProduct)));
-                        },
-                        child: Text('See All', style: Constants.linkText))
-                  ],
-                )),
-
-                // special offer list
-                SizedBox(height: 10),
-                Container(
-                    height: MediaQuery.of(context).size.height * 0.45,
-                    child: featuredProductService.featuredProduct.object == null
-                        ? Loading()
-                        : ListView.builder(
+                    // trending products
+                    SizedBox(height: 10),
+                    Container(
+                        height: MediaQuery.of(context).size.height * 0.45,
+                        child: ListView.builder(
                             scrollDirection: Axis.horizontal,
                             itemCount:
                                 trendingProductService.trendingProduct.length ??
@@ -525,26 +307,26 @@ class ProductViewState extends State<ProductView> {
                                   child: Container(
                                       padding: EdgeInsets.only(right: 10),
                                       width:
-                                          MediaQuery.of(context).size.width / 2,
+                                          MediaQuery.of(context).size.width / 3,
                                       child: Column(
                                         crossAxisAlignment:
                                             CrossAxisAlignment.start,
                                         children: [
                                           Container(
-                                              height: MediaQuery.of(context)
-                                                      .size
-                                                      .height *
-                                                  0.28,
-                                              child: FadeInImage.memoryNetwork(
-                                                  placeholder:
-                                                      kTransparentImage,
-                                                  fit: BoxFit.cover,
-                                                  image: trendingProduct
-                                                          .productImages.isEmpty
-                                                      ? "https://st3.depositphotos.com/23594922/31822/v/600/depositphotos_318221368-stock-illustration-missing-picture-page-for-website.jpg"
-                                                      : trendingProduct
-                                                          .productImages[0]
-                                                          .imageUrl)),
+                                            height: MediaQuery.of(context)
+                                                    .size
+                                                    .height *
+                                                0.20,
+                                            child: FadeInImage.memoryNetwork(
+                                                placeholder: kTransparentImage,
+                                                fit: BoxFit.cover,
+                                                image: trendingProduct
+                                                        .productImages.isEmpty
+                                                    ? "https://st3.depositphotos.com/23594922/31822/v/600/depositphotos_318221368-stock-illustration-missing-picture-page-for-website.jpg"
+                                                    : trendingProduct
+                                                        .productImages[0]
+                                                        .imageUrl),
+                                          ),
                                           SizedBox(height: 10),
                                           Text('${trendingProduct.name}',
                                               style: Constants.productTitle),
@@ -564,110 +346,415 @@ class ProductViewState extends State<ProductView> {
                                         ],
                                       )));
                             })),
-
-                // special deals title
-                Container(
-                    child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text('Special Deals', style: Constants.headerStyle),
-                    InkWell(
-                        onTap: () {
-                          List<Product> product = [];
-                          featuredProductService.featuredProduct.object
-                              .forEach((element) {
-                            var featProduct = Product(
-                                name: element.name,
-                                price: element.price,
-                                productImages: element.productImages,
-                                description: element.description);
-
-                            product.add(featProduct);
-                          });
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) =>
-                                      ProductListing(product)));
-                        },
-                        child: Text('See All', style: Constants.linkText))
-                  ],
-                )),
-
-                // special deals list
-                SizedBox(height: 10),
-                Container(
-                    height: MediaQuery.of(context).size.height * 0.45,
-                    child: featuredProductService.featuredProduct.object == null
-                        ? Loading()
-                        : ListView.builder(
-                            scrollDirection: Axis.horizontal,
-                            itemCount: featuredProductService
-                                    .featuredProduct.object.length ??
-                                0,
-                            itemBuilder: (BuildContext context, int index) {
-                              var featuredProduct = featuredProductService
-                                  .featuredProduct.object[index];
-                              return InkWell(
-                                  onTap: () {
+                    // featured products title
+                    Container(
+                        padding: EdgeInsets.symmetric(horizontal: 10),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text('Featured Products',
+                                style: Constants.headerStyle),
+                            InkWell(
+                                onTap: () {
+                                  List<Product> product = [];
+                                  featuredProductService.featuredProduct.object
+                                      .forEach((element) {
                                     var featProduct = Product(
-                                        name: featuredProduct.name,
-                                        price: featuredProduct.price,
-                                        productImages:
-                                            featuredProduct.productImages,
-                                        description:
-                                            featuredProduct.description);
-                                    Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) => ProductSingle(
-                                                  data: featProduct,
-                                                )));
-                                  },
-                                  child: Container(
-                                      padding: EdgeInsets.only(right: 10),
-                                      width:
-                                          MediaQuery.of(context).size.width / 2,
-                                      child: Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          Container(
-                                            height: MediaQuery.of(context)
-                                                    .size
-                                                    .height *
-                                                0.28,
-                                            child: FadeInImage.memoryNetwork(
-                                                placeholder: kTransparentImage,
-                                                fit: BoxFit.cover,
-                                                image: featuredProduct
-                                                        .productImages.isEmpty
-                                                    ? "https://st3.depositphotos.com/23594922/31822/v/600/depositphotos_318221368-stock-illustration-missing-picture-page-for-website.jpg"
-                                                    : featuredProduct
-                                                        .productImages[0]
-                                                        .imageUrl),
-                                          ),
-                                          SizedBox(height: 10),
-                                          Text('${featuredProduct.name}',
-                                              style: Constants.productTitle),
-                                          SizedBox(height: 3),
-                                          Wrap(
-                                            spacing: 8,
+                                        name: element.name,
+                                        price: element.price,
+                                        productImages: element.productImages,
+                                        description: element.description);
+
+                                    product.add(featProduct);
+                                  });
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              ProductListing(product)));
+                                },
+                                child:
+                                    Text('See All', style: Constants.linkText))
+                          ],
+                        )),
+                    // featured products list
+                    SizedBox(height: 10),
+                    Container(
+                        height: MediaQuery.of(context).size.height * 0.45,
+                        child: featuredProductService.featuredProduct.object ==
+                                null
+                            ? Loading()
+                            : ListView.builder(
+                                scrollDirection: Axis.horizontal,
+                                itemCount: featuredProductService
+                                        .featuredProduct.object.length ??
+                                    0,
+                                itemBuilder: (BuildContext context, int index) {
+                                  var featuredProduct = featuredProductService
+                                      .featuredProduct.object[index];
+                                  return InkWell(
+                                      onTap: () {
+                                        var featProduct = Product(
+                                            id: featuredProduct.id,
+                                            name: featuredProduct.name,
+                                            price: featuredProduct.price,
+                                            productImages:
+                                                featuredProduct.productImages,
+                                            description:
+                                                featuredProduct.description);
+                                        Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    ProductSingle(
+                                                      data: featProduct,
+                                                    )));
+                                      },
+                                      child: Container(
+                                          padding: EdgeInsets.only(right: 10),
+                                          width: MediaQuery.of(context)
+                                                  .size
+                                                  .width /
+                                              2,
+                                          child: Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
                                             children: [
-                                              Text('₦${featuredProduct.price}',
+                                              Container(
+                                                height: MediaQuery.of(context)
+                                                        .size
+                                                        .height *
+                                                    0.28,
+                                                child: FadeInImage.memoryNetwork(
+                                                    placeholder:
+                                                        kTransparentImage,
+                                                    fit: BoxFit.cover,
+                                                    image: featuredProduct
+                                                            .productImages
+                                                            .isEmpty
+                                                        ? "https://st3.depositphotos.com/23594922/31822/v/600/depositphotos_318221368-stock-illustration-missing-picture-page-for-website.jpg"
+                                                        : featuredProduct
+                                                            .productImages[0]
+                                                            .imageUrl),
+                                              ),
+                                              SizedBox(height: 10),
+                                              Text('${featuredProduct.name}',
                                                   style:
-                                                      Constants.productPrice),
-                                              Text(
-                                                  '₦${featuredProduct.buyPrice}',
-                                                  style: Constants
-                                                      .singleProductPriceStrike),
+                                                      Constants.productTitle),
+                                              SizedBox(height: 3),
+                                              Wrap(
+                                                spacing: 8,
+                                                children: [
+                                                  Text(
+                                                      '₦${featuredProduct.price}',
+                                                      style: Constants
+                                                          .productPrice),
+                                                  Text(
+                                                      '₦${featuredProduct.buyPrice}',
+                                                      style: Constants
+                                                          .singleProductPriceStrike),
+                                                ],
+                                              )
                                             ],
-                                          )
-                                        ],
-                                      )));
-                            })),
-              ])),
-            ));
+                                          )));
+                                })),
+
+                    // // hot deals title
+                    // Container(
+                    //     child: Row(
+                    //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    //   children: [
+                    //     Text('Hot Deals', style: Constants.headerStyle),
+                    //     InkWell(
+                    //         onTap: () {
+                    //           Navigator.push(
+                    //               context,
+                    //               MaterialPageRoute(
+                    //                   builder: (context) => ProductListing(
+                    //                       trendingProductService.trendingProduct)));
+                    //         },
+                    //         child: Text('See All', style: Constants.linkText))
+                    //   ],
+                    // )),
+
+                    // // hot deals list
+                    // SizedBox(height: 10),
+                    // Container(
+                    //     height: MediaQuery.of(context).size.height * 0.45,
+                    //     child: featuredProductService.featuredProduct.object == null
+                    //         ? Loading()
+                    //         : ListView.builder(
+                    //             scrollDirection: Axis.horizontal,
+                    //             itemCount: featuredProductService
+                    //                 .featuredProduct.object.length,
+                    //             itemBuilder: (BuildContext context, int index) {
+                    //               var featuredProduct = featuredProductService
+                    //                   .featuredProduct.object[index];
+                    //               return InkWell(
+                    //                   onTap: () {
+                    //                     var featProduct = Product(
+                    //                         name: featuredProduct.name,
+                    //                         price: featuredProduct.price,
+                    //                         productImages:
+                    //                             featuredProduct.productImages,
+                    //                         description:
+                    //                             featuredProduct.description);
+                    //                     Navigator.push(
+                    //                         context,
+                    //                         MaterialPageRoute(
+                    //                             builder: (context) => ProductSingle(
+                    //                                   data: featProduct,
+                    //                                 )));
+                    //                   },
+                    //                   child: Container(
+                    //                       padding: EdgeInsets.only(right: 10),
+                    //                       width:
+                    //                           MediaQuery.of(context).size.width / 2,
+                    //                       child: Column(
+                    //                         crossAxisAlignment:
+                    //                             CrossAxisAlignment.start,
+                    //                         children: [
+                    //                           Container(
+                    //                             height: MediaQuery.of(context)
+                    //                                     .size
+                    //                                     .height *
+                    //                                 0.28,
+                    //                             decoration: BoxDecoration(
+                    //                                 image: DecorationImage(
+                    //                                     fit: BoxFit.cover,
+                    //                                     image: NetworkImage(
+                    //                                         featuredProduct
+                    //                                             .productImages[0]
+                    //                                             .imageUrl))),
+                    //                           ),
+                    //                           SizedBox(height: 10),
+                    //                           Text('${featuredProduct.name}',
+                    //                               style: Constants.productTitle),
+                    //                           SizedBox(height: 3),
+                    //                           Wrap(
+                    //                             spacing: 8,
+                    //                             children: [
+                    //                               Text('₦${featuredProduct.price}',
+                    //                                   style:
+                    //                                       Constants.productPrice),
+                    //                               Text(
+                    //                                   '₦${featuredProduct.buyPrice}',
+                    //                                   style: Constants
+                    //                                       .singleProductPriceStrike),
+                    //                             ],
+                    //                           )
+                    //                         ],
+                    //                       )));
+                    //             })),
+
+                    // special offer title
+                    Container(
+                        padding: EdgeInsets.symmetric(horizontal: 10),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text('Special Offer', style: Constants.headerStyle),
+                            InkWell(
+                                onTap: () {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => ProductListing(
+                                              trendingProductService
+                                                  .trendingProduct)));
+                                },
+                                child:
+                                    Text('See All', style: Constants.linkText))
+                          ],
+                        )),
+
+                    // special offer list
+                    SizedBox(height: 10),
+                    Container(
+                        height: MediaQuery.of(context).size.height * 0.45,
+                        child: featuredProductService.featuredProduct.object ==
+                                null
+                            ? Loading()
+                            : ListView.builder(
+                                scrollDirection: Axis.horizontal,
+                                itemCount: trendingProductService
+                                        .trendingProduct.length ??
+                                    0,
+                                itemBuilder: (BuildContext context, int index) {
+                                  var trendingProduct = trendingProductService
+                                      .trendingProduct[index];
+                                  return InkWell(
+                                      onTap: () {
+                                        Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    ProductSingle(
+                                                        data:
+                                                            trendingProduct)));
+                                      },
+                                      child: Container(
+                                          padding: EdgeInsets.only(right: 10),
+                                          width: MediaQuery.of(context)
+                                                  .size
+                                                  .width /
+                                              2,
+                                          child: Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              Container(
+                                                  height: MediaQuery.of(context)
+                                                          .size
+                                                          .height *
+                                                      0.28,
+                                                  child: FadeInImage.memoryNetwork(
+                                                      placeholder:
+                                                          kTransparentImage,
+                                                      fit: BoxFit.cover,
+                                                      image: trendingProduct
+                                                              .productImages
+                                                              .isEmpty
+                                                          ? "https://st3.depositphotos.com/23594922/31822/v/600/depositphotos_318221368-stock-illustration-missing-picture-page-for-website.jpg"
+                                                          : trendingProduct
+                                                              .productImages[0]
+                                                              .imageUrl)),
+                                              SizedBox(height: 10),
+                                              Text('${trendingProduct.name}',
+                                                  style:
+                                                      Constants.productTitle),
+                                              SizedBox(height: 3),
+                                              Wrap(
+                                                spacing: 8,
+                                                children: [
+                                                  Text(
+                                                      '₦${trendingProduct.price}',
+                                                      style: Constants
+                                                          .productPrice),
+                                                  Text(
+                                                      '₦${trendingProduct.buyPrice}',
+                                                      style: Constants
+                                                          .singleProductPriceStrike),
+                                                ],
+                                              )
+                                            ],
+                                          )));
+                                })),
+
+                    // special deals title
+                    Container(
+                        padding: EdgeInsets.symmetric(horizontal: 10),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text('Special Deals', style: Constants.headerStyle),
+                            InkWell(
+                                onTap: () {
+                                  List<Product> product = [];
+                                  featuredProductService.featuredProduct.object
+                                      .forEach((element) {
+                                    var featProduct = Product(
+                                        name: element.name,
+                                        price: element.price,
+                                        productImages: element.productImages,
+                                        description: element.description);
+
+                                    product.add(featProduct);
+                                  });
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              ProductListing(product)));
+                                },
+                                child:
+                                    Text('See All', style: Constants.linkText))
+                          ],
+                        )),
+
+                    // special deals list
+                    SizedBox(height: 10),
+                    Container(
+                        height: MediaQuery.of(context).size.height * 0.45,
+                        child: featuredProductService.featuredProduct.object ==
+                                null
+                            ? Loading()
+                            : ListView.builder(
+                                scrollDirection: Axis.horizontal,
+                                itemCount: featuredProductService
+                                        .featuredProduct.object.length ??
+                                    0,
+                                itemBuilder: (BuildContext context, int index) {
+                                  var featuredProduct = featuredProductService
+                                      .featuredProduct.object[index];
+                                  return InkWell(
+                                      onTap: () {
+                                        var featProduct = Product(
+                                            name: featuredProduct.name,
+                                            price: featuredProduct.price,
+                                            productImages:
+                                                featuredProduct.productImages,
+                                            description:
+                                                featuredProduct.description);
+                                        Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    ProductSingle(
+                                                      data: featProduct,
+                                                    )));
+                                      },
+                                      child: Container(
+                                          padding: EdgeInsets.only(right: 10),
+                                          width: MediaQuery.of(context)
+                                                  .size
+                                                  .width /
+                                              2,
+                                          child: Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              Container(
+                                                height: MediaQuery.of(context)
+                                                        .size
+                                                        .height *
+                                                    0.28,
+                                                child: FadeInImage.memoryNetwork(
+                                                    placeholder:
+                                                        kTransparentImage,
+                                                    fit: BoxFit.cover,
+                                                    image: featuredProduct
+                                                            .productImages
+                                                            .isEmpty
+                                                        ? "https://st3.depositphotos.com/23594922/31822/v/600/depositphotos_318221368-stock-illustration-missing-picture-page-for-website.jpg"
+                                                        : featuredProduct
+                                                            .productImages[0]
+                                                            .imageUrl),
+                                              ),
+                                              SizedBox(height: 10),
+                                              Text('${featuredProduct.name}',
+                                                  style:
+                                                      Constants.productTitle),
+                                              SizedBox(height: 3),
+                                              Wrap(
+                                                spacing: 8,
+                                                children: [
+                                                  Text(
+                                                      '₦${featuredProduct.price}',
+                                                      style: Constants
+                                                          .productPrice),
+                                                  Text(
+                                                      '₦${featuredProduct.buyPrice}',
+                                                      style: Constants
+                                                          .singleProductPriceStrike),
+                                                ],
+                                              )
+                                            ],
+                                          )));
+                                })),
+                  ])),
+                )),
+          );
   }
 }
 

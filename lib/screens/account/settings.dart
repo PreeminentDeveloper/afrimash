@@ -1,6 +1,8 @@
 import 'package:afrimash/common/config/constants.dart';
 import 'package:afrimash/model/get_logged_in_details.dart';
 import 'package:afrimash/model/main_app_provider.dart';
+import 'package:afrimash/screens/account/about_us.dart';
+import 'package:afrimash/screens/account/contact_us.dart';
 import 'package:afrimash/screens/account/my_wish_list.dart';
 import 'package:afrimash/screens/auth/login.dart';
 import 'package:afrimash/screens/products/browsing_histor.dart';
@@ -104,7 +106,7 @@ class SettingsState extends State<Settings> {
                           setState(() => loading = true);
                           prefs = await SharedPreferences.getInstance();
                           if (prefs.containsKey('token')) {
-                            prefs.clear();
+                            prefs.remove('token');
                             _displayMessage(
                                 "Logout successfully", context, Colors.red);
                             Navigator.pop(context);
@@ -129,7 +131,8 @@ class SettingsState extends State<Settings> {
                     ListTile(
                         leading: const Icon(Icons.favorite_outline, size: 20),
                         title: Text(
-                            '${provider.getLoggedInDetails.object.user.username}',
+                            // '${provider.getLoggedInDetails.object.user.username}',
+                            'My WishList',
                             style: Constants.listTileTitle),
                         trailing: Icon(Icons.keyboard_arrow_right),
                         // onTap: () => pushNavigation(RouteList.cart),
@@ -151,7 +154,32 @@ class SettingsState extends State<Settings> {
                           //     context,
                           //     MaterialPageRoute(
                           //         builder: (context) => BrowsingHistory()));
-                        })
+                        }),
+                    Divider(),
+                    ListTile(
+                        leading:
+                            const Icon(Icons.contact_mail_outlined, size: 20),
+                        title:
+                            Text('Contact Us', style: Constants.listTileTitle),
+                        trailing: Icon(Icons.keyboard_arrow_right),
+                        onTap: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => ContactUS()));
+                        }),
+                    Divider(),
+                    ListTile(
+                        leading: const Icon(Icons.contact_support_outlined,
+                            size: 20),
+                        title: Text('About Us', style: Constants.listTileTitle),
+                        trailing: Icon(Icons.keyboard_arrow_right),
+                        onTap: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => AboutUs()));
+                        }),
                   ])),
                 ],
               ));

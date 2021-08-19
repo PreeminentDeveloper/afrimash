@@ -12,7 +12,7 @@ class CreateOrderService {
       if (response.statusCode == 200 || response.statusCode == 201) {
         return {'success': true, 'message': decodedData};
       } else {
-        return {'success': false, 'message': decodedData['errorMsg']};
+        return {'success': false, 'message': decodedData['error']};
       }
     } catch (e) {
       print(e.toString());

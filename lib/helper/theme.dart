@@ -40,6 +40,12 @@ class CustomTheme {
     fontSize: 12,
   );
 
+  static const TextStyle headline5 = TextStyle(
+    fontWeight: FontWeight.bold,
+    color: seagreen,
+    fontSize: 15,
+  );
+
   static const TextStyle textContent = TextStyle(
     fontSize: 14,
     color: Colors.black,

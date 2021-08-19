@@ -1,11 +1,14 @@
+import 'dart:convert';
+
 import 'package:afrimash/model/main_app_provider.dart';
 import 'package:afrimash/screens/account/settings.dart';
 import 'package:flutter/material.dart';
 import '../products/product_home.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class HomeView extends StatefulWidget {
-  // final MainAppProvider mainAppProvider;
-  // HomeView(this.mainAppProvider);
+  bool isOrder;
+  HomeView({this.isOrder});
 
   MainAppProvider get mainProvider => null;
   @override
@@ -14,6 +17,26 @@ class HomeView extends StatefulWidget {
 }
 
 class HomeViewState extends State<HomeView> {
+  SharedPreferences prefs;
+  bool loading = false;
+
+  @override
+  void initState() {
+    super.initState();
+    clearOrder();
+  }
+
+  clearOrder() async {
+    setState(() => loading = true);
+    prefs = await SharedPreferences.getInstance();
+    if (widget.isOrder = true) {
+      json.decode(prefs.getString('item'));
+      prefs.remove('item');
+      print("Ordered Item cleared!");
+    }
+    setState(() => loading = false);
+  }
+
   void onTabTapped(int index) {
     setState(() {
       _currentIndex = index;

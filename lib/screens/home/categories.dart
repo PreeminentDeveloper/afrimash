@@ -1,5 +1,8 @@
 import 'package:afrimash/helper/theme.dart';
+import 'package:afrimash/screens/Orders/checkout/success.dart';
+import 'package:afrimash/screens/home/indexed_product_category.dart';
 import 'package:afrimash/screens/home/search_categories.dart';
+import 'package:afrimash/screens/home/subcategory_screen.dart';
 import 'package:afrimash/service/get_all_product_categories_service.dart';
 import 'package:flutter/material.dart';
 import 'package:inspireui/widgets/loading.dart';
@@ -40,63 +43,6 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final _category_list = [
-      {
-        "name": "Farm Equipments",
-      },
-      {
-        "name": "Poultry Equipments",
-      },
-      {
-        "name": "Veterinary Medicines",
-      },
-      {
-        "name": "Poultry Equipments",
-      },
-      {
-        "name": "Poultry Feeders  ",
-      },
-      {
-        "name": "Livestock",
-      },
-      {
-        "name": "Farm Equipments",
-      },
-      {
-        "name": "Poultry Equipments",
-      },
-      {
-        "name": "Veterinary Medicines",
-      },
-      {
-        "name": "Poultry Equipments",
-      },
-      {
-        "name": "Poultry Feeders  ",
-      },
-      {
-        "name": "Livestock",
-      },
-      {
-        "name": "Farm Equipments",
-      },
-      {
-        "name": "Poultry Equipments",
-      },
-      {
-        "name": "Veterinary Medicines",
-      },
-      {
-        "name": "Poultry Equipments",
-      },
-      {
-        "name": "Poultry Feeders  ",
-      },
-      {
-        "name": "Livestock",
-      },
-    ];
-
     return loading
         ? Loading()
         : Scaffold(
@@ -143,7 +89,25 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
                             padding: const EdgeInsets.symmetric(
                                 horizontal: 5, vertical: 10),
                             child: InkWell(
-                              onTap: () {},
+                              onTap: () {
+                                if (!category.subCategories.isEmpty) {
+                                  print("${category.id}");
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              SubcategoryScreen(
+                                                  data: category)));
+                                } else {
+                                  print("${category.id}");
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              IndexedProductCategory(
+                                                  id: category.id)));
+                                }
+                              },
                               child: Row(
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,

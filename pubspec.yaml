@@ -107,6 +107,7 @@ dependencies:
   http_auth: 1.0.0
   uni_links: 0.4.0
   share: 2.0.1
+  url_launcher: ^6.0.9
 
   # AUTHENTICATION
   # apple_sign_in: 0.1.0

@@ -1384,7 +1384,7 @@ packages:
     source: hosted
     version: "1.0.0-nullsafety"
   url_launcher:
-    dependency: "direct overridden"
+    dependency: "direct main"
     description:
       name: url_launcher
       url: "https://pub.dartlang.org"

@@ -43,7 +43,7 @@ class PaymentState extends State<Payment> {
     setState(() => isLoading = false);
   }
 
-  generateOrder({payStack, bankTransfer}) async {
+  generateOrder({payStack, bankTransfer, wallet}) async {
     String shippingMethod = prefs.getString("shippingMethod");
     int userID = prefs.getInt("userID");
     int deliverAddressID = prefs.getInt("deliverAddressID");
@@ -85,6 +85,16 @@ class PaymentState extends State<Payment> {
       };
       print(data);
       createOrder(data);
+    } else if (selectedValue == 3) {
+      Map<String, dynamic> data = {
+        "customerId": 10,
+        "paymentMethod": wallet,
+        "shippingMethod": shippingMethod,
+        "deliveryAddress": deliverAddressID,
+        "orderItems": orderItems,
+      };
+      print(data);
+      createOrder(data);
     }
   }
 
@@ -117,7 +127,7 @@ class PaymentState extends State<Payment> {
       var success = response["success"];
       if (success == false) {
         setState(() => isLoading = false);
-        _failMessage(success['message'], context);
+        _failMessage(response['message'], context);
       } else {
         setState(() => isLoading = false);
         // DropdownBanner.showBanner(
@@ -125,11 +135,9 @@ class PaymentState extends State<Payment> {
         //   color: Colors.green,
         //   textStyle: TextStyle(color: Colors.white),
         // );
-
-        MakePayment(
-                ctx: context,
-                email: "badaruoluwasegun@gmail.com",
-                price: totalPrice)
+        prefs = await SharedPreferences.getInstance();
+        String activeUserEmail = prefs.getString("activeUserEmail");
+        MakePayment(ctx: context, email: activeUserEmail, price: totalPrice)
             .chargeCardAndMakePayment();
       }
     } catch (e) {
@@ -539,12 +547,17 @@ class PaymentState extends State<Payment> {
                                           prefs.getString("PAYSTACK");
                                       generateOrder(payStack: payStack);
                                     } else if (selectedValue == 2) {
-                                      prefs.setString("BANK_TRANSFER ",
+                                      prefs.setString("BANK_TRANSFER",
                                           "PAYMENT_METHOD_BANK_TRANSFER");
                                       String bankTransfer =
-                                          prefs.getString("BANK_TRANSFER ");
+                                          prefs.getString("BANK_TRANSFER");
                                       generateOrder(bankTransfer: bankTransfer);
-                                    } else if (selectedValue == 3) {}
+                                    } else if (selectedValue == 3) {
+                                      prefs.setString(
+                                          "WALLET", "PAYMENT_METHOD_WALLET");
+                                      String wallet = prefs.getString("WALLET");
+                                      generateOrder(wallet: wallet);
+                                    }
                                   } else {
                                     _failMessage(
                                         "Select payment method", context);
