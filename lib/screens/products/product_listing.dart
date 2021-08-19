@@ -1,10 +1,12 @@
 import 'package:afrimash/components/cartFloatingButton.dart';
 import 'package:afrimash/model/trending_products.dart';
+import 'package:afrimash/screens/products/cart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
 import '../../common/config/constants.dart';
 import 'product_single.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class ProductListing extends StatefulWidget {
   final List<Product> products;
@@ -18,6 +20,26 @@ class ProductListing extends StatefulWidget {
 }
 
 class ProductListingState extends State<ProductListing> {
+  int cartLength = 0;
+  SharedPreferences prefs;
+  bool loading = false;
+
+  initState() {
+    super.initState();
+    getCartLength();
+  }
+
+  getCartLength() async {
+    setState(() => loading = true);
+    prefs = await SharedPreferences.getInstance();
+    if (prefs.containsKey('cartLength')) {
+      cartLength = prefs.getInt('cartLength');
+    } else {
+      cartLength = 0;
+    }
+    setState(() => loading = false);
+  }
+
   Widget build(BuildContext context) {
     return Scaffold(
         backgroundColor: Colors.white,
@@ -140,7 +162,19 @@ class ProductListingState extends State<ProductListing> {
                                   ],
                                 )));
                       }))),
-          Positioned(bottom: 0, right: 0, child: CartButton())
+          Positioned(
+              bottom: 0,
+              right: 0,
+              child: CartButton(
+                itemCount: cartLength,
+                //cartList == null
+                //     ? 0
+                //     : cartList.length > 0
+                //         ? cartList.length
+                //         : 0,
+                onTap: () => Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => CartScren())),
+              ))
         ]));
   }
 }
