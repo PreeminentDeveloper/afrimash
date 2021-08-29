@@ -320,6 +320,7 @@ class DeliveryState extends State<Delivery> {
                         });
                       },
                       child: ListTile(
+                        contentPadding: EdgeInsets.zero,
                         title: Text("Delivery"),
                         leading: Radio(
                           value: 1,
@@ -336,7 +337,7 @@ class DeliveryState extends State<Delivery> {
                     Visibility(
                       visible: selectedValue == 1 ? true : false,
                       child: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 50),
+                        padding: const EdgeInsets.symmetric(horizontal: 30),
                         child: Container(
                           padding: const EdgeInsets.all(12),
                           decoration: BoxDecoration(
@@ -413,6 +414,7 @@ class DeliveryState extends State<Delivery> {
                     });
                   },
                   child: ListTile(
+                    contentPadding: EdgeInsets.zero,
                     title: Text("Pickup"),
                     leading: Radio(
                       value: 2,
@@ -430,7 +432,7 @@ class DeliveryState extends State<Delivery> {
                   visible: selectedValue == 2 ? true : false,
                   child: Padding(
                     padding: const EdgeInsets.symmetric(
-                        horizontal: 50, vertical: 10),
+                        horizontal: 30, vertical: 10),
                     child: Container(
                         padding: const EdgeInsets.all(12),
                         decoration: BoxDecoration(
@@ -537,7 +539,7 @@ class DeliveryState extends State<Delivery> {
                 ),
                 Padding(
                   padding:
-                      const EdgeInsets.symmetric(horizontal: 50, vertical: 10),
+                      const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
                   child: RaisedButton(
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.all(Radius.circular(5))),

@@ -1,17 +1,38 @@
 import 'package:afrimash/common/config/constants.dart';
+import 'package:afrimash/common/custom_state_dropdown.dart';
+import 'package:afrimash/common/state_file.dart';
 import 'package:afrimash/helper/theme.dart';
 import 'package:flutter/material.dart';
+import 'package:inspireui/widgets/loading.dart';
 import 'package:page_indicator/page_indicator.dart';
 
 class Address extends StatefulWidget {
   final TabController tabController;
-  const Address({Key key, this.tabController}) : super(key: key);
+  String activeUserEmail,
+      activeUserFirstName,
+      activeUserLastName,
+      activeUserPhoneNumber,
+      activeUserState,
+      activeUserCity;
+  Address(
+      {Key key,
+      this.tabController,
+      this.activeUserEmail,
+      this.activeUserFirstName,
+      this.activeUserLastName,
+      this.activeUserPhoneNumber,
+      this.activeUserState,
+      this.activeUserCity})
+      : super(key: key);
 
   @override
   AddressState createState() => AddressState();
 }
 
 class AddressState extends State<Address> {
+  var _selectedState;
+  bool isVisible = false;
+
   void _snackBarMessage(message, context) {
     /// Showing Error messageSnackBarDemo
     /// Ability so close message
@@ -43,8 +64,10 @@ class AddressState extends State<Address> {
             children: [
               TextField(
                 decoration: InputDecoration(
-                    hintText: "First Name",
-                    hintStyle: TextStyle(color: Colors.grey.shade400)),
+                  hintText: "First Name",
+                  hintStyle: TextStyle(color: Colors.grey.shade400),
+                  labelText: widget.activeUserFirstName ?? "",
+                ),
               ),
               SizedBox(
                 height: 10,
@@ -52,7 +75,8 @@ class AddressState extends State<Address> {
               TextField(
                 decoration: InputDecoration(
                     hintText: "Last Name",
-                    hintStyle: TextStyle(color: Colors.grey.shade400)),
+                    hintStyle: TextStyle(color: Colors.grey.shade400),
+                    labelText: widget.activeUserLastName ?? ""),
               ),
               SizedBox(
                 height: 10,
@@ -60,7 +84,8 @@ class AddressState extends State<Address> {
               TextField(
                 decoration: InputDecoration(
                     hintText: "Mobile Number",
-                    hintStyle: TextStyle(color: Colors.grey.shade400)),
+                    hintStyle: TextStyle(color: Colors.grey.shade400),
+                    labelText: widget.activeUserPhoneNumber ?? ""),
               ),
               SizedBox(
                 height: 10,
@@ -68,18 +93,57 @@ class AddressState extends State<Address> {
               TextField(
                 decoration: InputDecoration(
                     hintText: "Email",
-                    hintStyle: TextStyle(color: Colors.grey.shade400)),
+                    hintStyle: TextStyle(color: Colors.grey.shade400),
+                    labelText: widget.activeUserEmail ?? ""),
               ),
               SizedBox(
                 height: 10,
               ),
-              SizedBox(
-                height: 10,
-              ),
-              TextField(
-                decoration: InputDecoration(
-                    hintText: "State / Region",
-                    hintStyle: TextStyle(color: Colors.grey.shade400)),
+              // TextField(
+              //   decoration: InputDecoration(
+              //       hintText: "State",
+              //       hintStyle: TextStyle(color: Colors.grey.shade400),
+              //       labelText: widget.activeUserState ?? ""),
+              // ),
+              // SizedBox(
+              //   height: 10,
+              // ),
+              widget.activeUserState != null
+                  ? Visibility(
+                      visible: isVisible == false ? true : false,
+                      child: GestureDetector(
+                        onTap: () {
+                          setState(() {
+                            isVisible = true;
+                          });
+                        },
+                        child: CustomStateDropdown(
+                          textHint: "State",
+                          isExpanded: true,
+                          value: widget.activeUserState,
+                          items: null,
+                        ),
+                      ),
+                    )
+                  : null,
+              Visibility(
+                visible: isVisible,
+                child: CustomStateDropdown(
+                  textHint: "State",
+                  isExpanded: true,
+                  onTap: () => FocusManager.instance.primaryFocus.unfocus(),
+                  items: StateFile.state
+                      .map((e) => DropdownMenuItem<String>(
+                          value: "${e['state']}", child: Text("${e['state']}")))
+                      .toList(),
+                  onChanged: (value) {
+                    setState(() {
+                      this._selectedState = value;
+                      print(value);
+                    });
+                  },
+                  value: _selectedState,
+                ),
               ),
               SizedBox(
                 height: 10,
@@ -87,7 +151,8 @@ class AddressState extends State<Address> {
               TextField(
                 decoration: InputDecoration(
                     hintText: "City",
-                    hintStyle: TextStyle(color: Colors.grey.shade400)),
+                    hintStyle: TextStyle(color: Colors.grey.shade400),
+                    labelText: widget.activeUserCity ?? null),
               ),
               SizedBox(
                 height: 20,

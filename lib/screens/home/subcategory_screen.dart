@@ -17,7 +17,7 @@ class _SubcategoryScreenState extends State<SubcategoryScreen> {
     return Scaffold(
         appBar: AppBar(
           title: Text(
-            "Subcategories",
+            "Category name",
             style: CustomTheme.titleText3,
           ),
           leading: GestureDetector(
