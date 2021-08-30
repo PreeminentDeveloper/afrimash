@@ -2,9 +2,7 @@ import 'package:flutter/material.dart';
 
 class Constants {
   static const headerStyle = TextStyle(
-    fontSize: 20,
-    fontFamily: 'Feather',
-  );
+      fontSize: 18, fontFamily: 'Feather', fontWeight: FontWeight.w600);
 
   static const headerStyleBold = TextStyle(
     fontSize: 18,
@@ -13,14 +11,14 @@ class Constants {
   );
   static const productTitle = TextStyle(
     fontSize: 13,
-    fontWeight: FontWeight.w400,
+    fontWeight: FontWeight.w600,
     fontFamily: 'Feather',
-    color: Colors.black54,
+    color: Colors.black87,
   );
 
   static const singleProductTitle = TextStyle(
-    fontSize: 26,
-    fontWeight: FontWeight.w400,
+    fontSize: 25,
+    fontWeight: FontWeight.w600,
     fontFamily: 'Feather',
   );
 
@@ -30,7 +28,7 @@ class Constants {
     fontFamily: 'Feather',
   );
   static const productPrice = TextStyle(
-      fontSize: 15, fontFamily: 'SF Pro Display', color: Colors.black54);
+      fontSize: 13, fontFamily: 'SF Pro Display', color: secondaryColor);
 
   static const singleProductPrice = TextStyle(
     fontSize: 15,
@@ -40,7 +38,7 @@ class Constants {
   );
 
   static const singleProductPriceStrike = TextStyle(
-      fontSize: 15,
+      fontSize: 13,
       fontFamily: 'SF Pro Display',
       fontWeight: FontWeight.w300,
       color: Color(0xffaaaaaa),
@@ -56,9 +54,15 @@ class Constants {
           // color: Color(0xffaaaaaa),
           );
 
+  static const cartItemTitleWhite =
+      TextStyle(fontSize: 17, fontFamily: 'Feather', color: Colors.white
+          // color: Color(0xffaaaaaa),
+          );
+
   static const cartItemPrice = TextStyle(
     fontSize: 14,
-    color: Colors.black54,
+    // color: Colors.black54,
+    color: Color(0xff00854e),
     fontFamily: 'SF Pro Display',
   );
 
@@ -72,6 +76,20 @@ class Constants {
   static const cartTotalPrice = TextStyle(
     fontSize: 22,
     color: Colors.black54,
+    fontWeight: FontWeight.w300,
+    fontFamily: 'Feather',
+  );
+
+  static const cartTotalPriceWhite2 = TextStyle(
+    fontSize: 22,
+    color: Colors.white,
+    fontWeight: FontWeight.w300,
+    fontFamily: 'SF Pro Display',
+  );
+
+  static const cartTotalPriceWhite = TextStyle(
+    fontSize: 22,
+    color: Colors.white,
     fontWeight: FontWeight.w300,
     fontFamily: 'Feather',
   );

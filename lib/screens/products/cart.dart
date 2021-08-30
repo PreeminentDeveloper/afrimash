@@ -22,7 +22,7 @@ class CartScren extends StatefulWidget {
 }
 
 class CartScreenState extends State<CartScren> {
-  // final TextEditingController _quantityController = TextEditingController();
+  // final TextEditingController quantityController = TextEditingController();
   List<dynamic> cartList;
   bool loading = false;
   bool check = false;
@@ -51,18 +51,18 @@ class CartScreenState extends State<CartScren> {
   }
 
   // increaseQuantity() {
-  //   var quantity = num.parse(_quantityController.text);
+  //   var quantity = num.parse(quantityController.text);
   //   if (quantity < 10) {
   //     quantity++;
-  //     _quantityController.text = quantity.toString();
+  //     quantityController.text = quantity.toString();
   //   }
   // }
 
   // decreaseQuantity() {
-  //   var quantity = num.parse(_quantityController.text);
+  //   var quantity = num.parse(quantityController.text);
   //   if (quantity > 0) {
   //     quantity--;
-  //     _quantityController.text = quantity.toString();
+  //     quantityController.text = quantity.toString();
   //   }
   // }
 
@@ -78,14 +78,14 @@ class CartScreenState extends State<CartScren> {
         totalPrice == null
             ? null
             : reducedTotal != 0.0
-                ? "$reducedTotal"
-                : "$totalPrice",
-        style: Constants.cartTotalPrice);
+                ? "₦$reducedTotal"
+                : "₦$totalPrice",
+        style: Constants.cartTotalPriceWhite2);
   }
 
   Widget buildQuantityControl(index, quantity) {
-    final TextEditingController _quantityController = TextEditingController();
-    _quantityController.text = "$quantity";
+    final TextEditingController quantityController = TextEditingController();
+    quantityController.text = "$quantity";
     itemPrice = cartList[index]['itemPrice'];
     return Container(
         // width: MediaQuery.of(context).size.width * 0.5,
@@ -94,10 +94,10 @@ class CartScreenState extends State<CartScren> {
             children: [
           GestureDetector(
               onTap: () {
-                var quantity = num.parse(_quantityController.text);
+                var quantity = num.parse(quantityController.text);
                 if (quantity > 0) {
                   quantity--;
-                  _quantityController.text = quantity.toString();
+                  quantityController.text = quantity.toString();
                 }
                 // decreaseQuantity();
               },
@@ -112,10 +112,10 @@ class CartScreenState extends State<CartScren> {
                 style: TextStyle(fontSize: 13, color: Color(0xff666666)),
                 onChanged: (value) {
                   if (num.parse(value) > 10) {
-                    _quantityController.text = '10';
+                    quantityController.text = '10';
                   }
                 },
-                controller: _quantityController,
+                controller: quantityController,
                 keyboardType: TextInputType.number,
                 decoration: InputDecoration(
                   // contentPadding: EdgeInsets.fromLTRB(25, 20, 20, 20),
@@ -136,13 +136,15 @@ class CartScreenState extends State<CartScren> {
               )),
           GestureDetector(
               onTap: () {
-                var quantity = num.parse(_quantityController.text);
+                var quantity = num.parse(quantityController.text);
                 if (quantity < 10) {
                   quantity++;
-                  _quantityController.text = quantity.toString();
+
+                  quantityController.text = quantity.toString();
                   check = true;
+
                   // totalPrice = quantity * itemPrice;
-                  totalWidget(index: index, quantity: totalPrice);
+                  // totalWidget(index: index, quantity: totalPrice);
                   print(totalPrice);
                   //   if (quantity < 0) {
                   //     setState(() {
@@ -158,7 +160,7 @@ class CartScreenState extends State<CartScren> {
                   //     setState(() {
                   //       loading = true;
                   //       quantity++;
-                  //       _quantityController.text = quantity.toString();
+                  //       quantityController.text = quantity.toString();
                   //       totalPrice = quantity * itemPrice;
                   //       itemPrice = totalPrice;
                   //       loading = false;
@@ -326,7 +328,7 @@ class CartScreenState extends State<CartScren> {
                                   child: Container(
                                       height:
                                           MediaQuery.of(context).size.height *
-                                              0.4,
+                                              0.55,
                                       child: ListView.builder(
                                         physics: ScrollPhysics(),
                                         // shrinkWrap: true,
@@ -402,6 +404,10 @@ class CartScreenState extends State<CartScren> {
                                                                       .start,
                                                               children: [
                                                                 Container(
+                                                                    width: MediaQuery.of(context)
+                                                                            .size
+                                                                            .width *
+                                                                        0.6,
                                                                     child: Text(
                                                                         '${item['name']}',
                                                                         style: Constants
@@ -430,14 +436,23 @@ class CartScreenState extends State<CartScren> {
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
                                     children: <Widget>[
+                                      SizedBox(height: 20),
                                       Container(
                                           padding: EdgeInsets.symmetric(
                                               horizontal: 15, vertical: 15),
                                           margin: EdgeInsets.symmetric(
                                               horizontal: 15, vertical: 10),
                                           decoration: BoxDecoration(
-                                            color: Colors.grey[200],
-                                          ),
+                                              color: Color(0xff37ae23),
+                                              boxShadow: [
+                                                BoxShadow(
+                                                    color: Colors.grey[300],
+                                                    blurRadius: 10.0,
+                                                    // soften the shadow
+                                                    spreadRadius: 3.0,
+                                                    //extend the shadow
+                                                    offset: Offset.zero)
+                                              ]),
                                           child: Column(
                                             children: [
                                               Row(
@@ -447,10 +462,10 @@ class CartScreenState extends State<CartScren> {
                                                 children: [
                                                   Text('Products',
                                                       style: Constants
-                                                          .cartItemTitle),
+                                                          .cartItemTitleWhite),
                                                   Text('x${cartList.length}',
                                                       style: Constants
-                                                          .cartItemTitle),
+                                                          .cartItemTitleWhite),
                                                 ],
                                               ),
                                               SizedBox(height: 10),
@@ -461,7 +476,7 @@ class CartScreenState extends State<CartScren> {
                                                 children: [
                                                   Text('Total',
                                                       style: Constants
-                                                          .cartTotalPrice),
+                                                          .cartTotalPriceWhite),
                                                   loading
                                                       ? Loading()
                                                       : totalWidget(),
@@ -470,70 +485,70 @@ class CartScreenState extends State<CartScren> {
                                             ],
                                           )),
                                       SizedBox(height: 20),
-                                      // coupon
-                                      Container(
-                                        padding: EdgeInsets.symmetric(
-                                            horizontal: 15),
-                                        child: Text(
-                                            'Enter your coupon code if you have one..'),
-                                      ),
+                                      // // coupon
+                                      // Container(
+                                      //   padding: EdgeInsets.symmetric(
+                                      //       horizontal: 15),
+                                      //   child: Text(
+                                      //       'Enter your coupon code if you have one..'),
+                                      // ),
 
-                                      SizedBox(height: 10),
-                                      Container(
-                                          margin: EdgeInsets.symmetric(
-                                              horizontal: 15),
-                                          height: 53,
-                                          child: Row(
-                                            children: [
-                                              Container(
-                                                  width: MediaQuery.of(context)
-                                                          .size
-                                                          .width *
-                                                      0.6,
-                                                  child: TextFormField(
-                                                    decoration: InputDecoration(
-                                                      // contentPadding: EdgeInsets.fromLTRB(25, 20, 20, 20),
-                                                      hintStyle: TextStyle(
-                                                          color: Colors.black),
-                                                      hintText: 'Discount Code',
-                                                      isDense: true,
-                                                      // enabledBorder: OutlineInputBorder(
-                                                      //   borderRadius: BorderRadius.circular(6),
-                                                      //   borderSide:
-                                                      //       BorderSide(color: Color(0xffaaaaaa).withOpacity(0.4)),
-                                                      // ),
-                                                      // focusedBorder: OutlineInputBorder(
-                                                      //   borderRadius: BorderRadius.circular(6),
-                                                      //   borderSide:
-                                                      //       BorderSide(color: Color(0xffaaaaaa).withOpacity(0.4)),
-                                                      // ),
-                                                      // errorText: 'Amount is required'
-                                                    ),
-                                                  )),
-                                              Container(
-                                                  width: MediaQuery.of(context)
-                                                          .size
-                                                          .width *
-                                                      0.3,
-                                                  padding:
-                                                      EdgeInsets.only(left: 10),
-                                                  child: TextButton.icon(
-                                                      style: ButtonStyle(
-                                                        backgroundColor:
-                                                            MaterialStateProperty
-                                                                .all(Constants
-                                                                    .afrimashBlue),
-                                                      ),
-                                                      onPressed: () {},
-                                                      icon: Icon(Icons.check,
-                                                          size: 20,
-                                                          color: Colors.white),
-                                                      label: Text('Apply',
-                                                          style: TextStyle(
-                                                              color: Colors
-                                                                  .white))))
-                                            ],
-                                          )),
+                                      // SizedBox(height: 10),
+                                      // Container(
+                                      //     margin: EdgeInsets.symmetric(
+                                      //         horizontal: 15),
+                                      //     height: 53,
+                                      //     child: Row(
+                                      //       children: [
+                                      //         Container(
+                                      //             width: MediaQuery.of(context)
+                                      //                     .size
+                                      //                     .width *
+                                      //                 0.6,
+                                      //             child: TextFormField(
+                                      //               decoration: InputDecoration(
+                                      //                 // contentPadding: EdgeInsets.fromLTRB(25, 20, 20, 20),
+                                      //                 hintStyle: TextStyle(
+                                      //                     color: Colors.black),
+                                      //                 hintText: 'Discount Code',
+                                      //                 isDense: true,
+                                      //                 // enabledBorder: OutlineInputBorder(
+                                      //                 //   borderRadius: BorderRadius.circular(6),
+                                      //                 //   borderSide:
+                                      //                 //       BorderSide(color: Color(0xffaaaaaa).withOpacity(0.4)),
+                                      //                 // ),
+                                      //                 // focusedBorder: OutlineInputBorder(
+                                      //                 //   borderRadius: BorderRadius.circular(6),
+                                      //                 //   borderSide:
+                                      //                 //       BorderSide(color: Color(0xffaaaaaa).withOpacity(0.4)),
+                                      //                 // ),
+                                      //                 // errorText: 'Amount is required'
+                                      //               ),
+                                      //             )),
+                                      //         Container(
+                                      //             width: MediaQuery.of(context)
+                                      //                     .size
+                                      //                     .width *
+                                      //                 0.3,
+                                      //             padding:
+                                      //                 EdgeInsets.only(left: 10),
+                                      //             child: TextButton.icon(
+                                      //                 style: ButtonStyle(
+                                      //                   backgroundColor:
+                                      //                       MaterialStateProperty
+                                      //                           .all(Constants
+                                      //                               .afrimashBlue),
+                                      //                 ),
+                                      //                 onPressed: () {},
+                                      //                 icon: Icon(Icons.check,
+                                      //                     size: 20,
+                                      //                     color: Colors.white),
+                                      //                 label: Text('Apply',
+                                      //                     style: TextStyle(
+                                      //                         color: Colors
+                                      //                             .white))))
+                                      //       ],
+                                      //     )),
                                       SizedBox(height: 100),
                                     ],
                                   ),

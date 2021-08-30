@@ -9,7 +9,8 @@ import 'package:inspireui/widgets/loading.dart';
 
 class IndexedProductCategory extends StatefulWidget {
   int id;
-  IndexedProductCategory({Key key, this.id}) : super(key: key);
+  String name;
+  IndexedProductCategory({Key key, this.id, this.name}) : super(key: key);
 
   @override
   _IndexedProductCategoryState createState() => _IndexedProductCategoryState();
@@ -52,7 +53,9 @@ class _IndexedProductCategoryState extends State<IndexedProductCategory> {
             backgroundColor: Colors.white,
             appBar: AppBar(
               title: Text(
-                "Category Product",
+                "Category: ${widget.name}",
+                maxLines: 2,
+                overflow: TextOverflow.ellipsis,
                 style: CustomTheme.titleText3.copyWith(color: Colors.white),
               ),
               backgroundColor: Constants.primaryColor,

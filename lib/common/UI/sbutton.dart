@@ -3,13 +3,20 @@ import 'package:flutter/material.dart';
 
 class Sbutton extends StatelessWidget {
   String title;
+  Widget icon;
   Function onPressed;
-  Sbutton({this.title, this.onPressed});
+  Sbutton({this.title, this.icon, this.onPressed});
 
   Widget build(BuildContext context) {
     return CupertinoButton(
       color: Color(0xfff1c40f),
-      child: Text(title, style: TextStyle(color: Colors.black)),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          icon ?? Container(),
+          Text(title, style: TextStyle(color: Colors.black)),
+        ],
+      ),
       onPressed: onPressed,
     );
   }

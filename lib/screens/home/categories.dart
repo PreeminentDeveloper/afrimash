@@ -61,18 +61,19 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
               brightness: Theme.of(context).brightness,
               backgroundColor: Colors.transparent,
               elevation: 0.0,
-              actions: [
-                IconButton(
-                  icon: Icon(
-                    Icons.search,
-                    color: Colors.black,
-                  ),
-                  onPressed: () => Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => SearchCategories())),
-                )
-              ],
+              // TODO: Implement search
+              // actions: [
+              //   IconButton(
+              //     icon: Icon(
+              //       Icons.search,
+              //       color: Colors.black,
+              //     ),
+              //     onPressed: () => Navigator.push(
+              //         context,
+              //         MaterialPageRoute(
+              //             builder: (context) => SearchCategories())),
+              //   )
+              // ],
             ),
             body: SafeArea(
                 child: Padding(
@@ -105,6 +106,7 @@ class _CategoriesScreenState extends State<CategoriesScreen> {
                                       MaterialPageRoute(
                                           builder: (context) =>
                                               IndexedProductCategory(
+                                                  name: category.name,
                                                   id: category.id)));
                                 }
                               },

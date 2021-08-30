@@ -219,8 +219,11 @@ class ProductSingleState extends State<ProductSingle> {
                         title: Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 10),
                           child: Text('${widget.data.name}',
+                              maxLines: 2,
+                              overflow: TextOverflow.ellipsis,
                               style: TextStyle(
                                 color: Colors.white,
+                                fontWeight: FontWeight.w600,
                                 fontSize: 16.0,
                               )),
                         ),
@@ -319,10 +322,15 @@ class ProductSingleState extends State<ProductSingle> {
                                 ],
                               )),
                               // add to cart
-                              SizedBox(height: 17),
+                              SizedBox(height: 25),
                               SizedBox(
                                   width: MediaQuery.of(context).size.width,
                                   child: Sbutton(
+                                      icon: Padding(
+                                        padding: EdgeInsets.only(right: 15),
+                                        child: Icon(Icons.shopping_cart,
+                                            color: Colors.black),
+                                      ),
                                       title: 'ADD TO CART',
                                       onPressed: () {
                                         addItemToCart();

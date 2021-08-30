@@ -12,8 +12,8 @@ class CartButton extends StatelessWidget {
     return GestureDetector(
         onTap: onTap,
         child: Container(
-            width: 100,
-            padding: EdgeInsets.all(15),
+            width: 90,
+            padding: EdgeInsets.all(10),
             decoration: BoxDecoration(
               // boxShadow: kElevationToShadow[1],
 
@@ -23,7 +23,7 @@ class CartButton extends StatelessWidget {
                     blurRadius: 3.0,
                     offset: Offset(0.0, 0.75))
               ],
-              color: Color(0xff12cca7).withOpacity(0.2),
+              color: Color(0xff12cca7).withOpacity(0.3),
               borderRadius: BorderRadius.only(
                 topLeft: Radius.circular(20.0),
               ),
@@ -35,8 +35,9 @@ class CartButton extends StatelessWidget {
                 Badge(
                   toAnimate: true,
                   badgeColor: const Color(0xff00854e),
-                  badgeContent: Text("$itemCount"),
-                  child: Icon(Icons.add_shopping_cart_outlined),
+                  badgeContent: Text("$itemCount",
+                      style: TextStyle(fontSize: 11, color: Colors.white)),
+                  child: Icon(Icons.add_shopping_cart),
                 )
 
                 // Container(
