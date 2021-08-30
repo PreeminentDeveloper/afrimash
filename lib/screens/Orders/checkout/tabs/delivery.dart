@@ -1,4 +1,6 @@
 import 'package:afrimash/common/config/constants.dart';
+import 'package:afrimash/common/custom_state_dropdown.dart';
+import 'package:afrimash/common/state_file.dart';
 import 'package:afrimash/helper/theme.dart';
 import 'package:afrimash/model/main_app_provider.dart';
 import 'package:afrimash/service/create_delivery_address_service.dart';
@@ -31,6 +33,7 @@ class DeliveryState extends State<Delivery> {
 
   CreateDeliveryAddressService createDeliveryAddress =
       CreateDeliveryAddressService();
+  var _selectedState;
 
   bool isLoading = false;
   Map<String, dynamic> locationData;
@@ -320,6 +323,7 @@ class DeliveryState extends State<Delivery> {
                         });
                       },
                       child: ListTile(
+                        contentPadding: EdgeInsets.zero,
                         title: Text("Delivery"),
                         leading: Radio(
                           value: 1,
@@ -336,7 +340,7 @@ class DeliveryState extends State<Delivery> {
                     Visibility(
                       visible: selectedValue == 1 ? true : false,
                       child: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 50),
+                        padding: const EdgeInsets.symmetric(horizontal: 30),
                         child: Container(
                           padding: const EdgeInsets.all(12),
                           decoration: BoxDecoration(
@@ -364,19 +368,23 @@ class DeliveryState extends State<Delivery> {
                               SizedBox(
                                 height: 15,
                               ),
-                              TextFormField(
-                                key: stateFormKey,
-                                controller: stateController,
-                                autofillHints: [AutofillHints.addressState],
-                                autocorrect: false,
-                                enableSuggestions: false,
-                                textInputAction: TextInputAction.next,
-                                keyboardType: TextInputType.streetAddress,
-                                // onSubmitted: (_) => FocusScope.of(context)
-                                //     .requestFocus(emailNode),
-                                decoration: InputDecoration(
-                                    labelText: 'Enter State',
-                                    hintText: 'State'),
+                              CustomStateDropdown(
+                                textHint: "Select State",
+                                isExpanded: true,
+                                onTap: () => FocusManager.instance.primaryFocus
+                                    .unfocus(),
+                                items: StateFile.state
+                                    .map((e) => DropdownMenuItem<String>(
+                                        value: "${e['state']}",
+                                        child: Text("${e['state']}")))
+                                    .toList(),
+                                onChanged: (value) {
+                                  setState(() {
+                                    this._selectedState = value;
+                                    print("$_selectedState");
+                                  });
+                                },
+                                value: _selectedState,
                               ),
                               SizedBox(
                                 height: 15,
@@ -413,6 +421,7 @@ class DeliveryState extends State<Delivery> {
                     });
                   },
                   child: ListTile(
+                    contentPadding: EdgeInsets.zero,
                     title: Text("Pickup"),
                     leading: Radio(
                       value: 2,
@@ -430,7 +439,7 @@ class DeliveryState extends State<Delivery> {
                   visible: selectedValue == 2 ? true : false,
                   child: Padding(
                     padding: const EdgeInsets.symmetric(
-                        horizontal: 50, vertical: 10),
+                        horizontal: 30, vertical: 10),
                     child: Container(
                         padding: const EdgeInsets.all(12),
                         decoration: BoxDecoration(
@@ -537,7 +546,7 @@ class DeliveryState extends State<Delivery> {
                 ),
                 Padding(
                   padding:
-                      const EdgeInsets.symmetric(horizontal: 50, vertical: 10),
+                      const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
                   child: RaisedButton(
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.all(Radius.circular(5))),
@@ -557,7 +566,7 @@ class DeliveryState extends State<Delivery> {
                             String state = stateController.text;
                             Map<String, dynamic> data = {
                               "address": address,
-                              "state": state,
+                              "state": _selectedState,
                               // "customerId": prefs.getInt("userID")
                               "customerId": 10
                             };

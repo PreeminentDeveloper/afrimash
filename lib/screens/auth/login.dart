@@ -102,8 +102,8 @@ class _LoginPageState extends BaseScreen<LoginScreen>
         widget.fromCart == true
             ? Navigator.pushReplacement(
                 context, MaterialPageRoute(builder: (_) => Checkout()))
-            : Navigator.pushReplacement(
-                context, MaterialPageRoute(builder: (_) => HomeView()));
+            : Navigator.pushReplacement(context,
+                MaterialPageRoute(builder: (_) => HomeView(isOrder: false)));
       }
     } catch (e) {
       print(e.toString());

@@ -19,8 +19,20 @@ class GetLoggedInDetailsService with ChangeNotifier {
         .getWithToken("/afrimash/customers/logged-in-details");
     try {
       if (response['status'] == "OK") {
-        var activeUserEmail = response['object']['user']['email'];
+        var activeUserEmail = response['object']['email'];
+        var activeUserFirstName = response['object']['firstName'];
+        var activeUserLastName = response['object']['lastName'];
+        var activeUserPhoneNumber = response['object']['user']['phoneNo'];
+        var activeUserState = response['object']['state'];
+        var activeUserCity = response['object']['city'];
+        print(
+            "$activeUserLastName $activeUserFirstName $activeUserPhoneNumber $activeUserEmail $activeUserState $activeUserCity");
         prefs.setString("activeUserEmail", activeUserEmail);
+        prefs.setString("activeUserFirstName", activeUserFirstName);
+        prefs.setString("activeUserLastName", activeUserLastName);
+        prefs.setString("activeUserPhoneNumber", activeUserPhoneNumber);
+        prefs.setString("activeUserState", activeUserState);
+        prefs.setString("activeUserCity", activeUserCity);
         print("Logged In Details Response: $response");
         _getLoggedInDetails = GetLoggedInDetails.fromJson(response);
         notifyListeners();

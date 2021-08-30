@@ -28,6 +28,7 @@ class CartScreenState extends State<CartScren> {
   bool check = false;
   SharedPreferences prefs;
   double totalPrice = 0.0;
+  double reducedTotal = 0.0;
   double itemPrice;
 
   @override
@@ -74,7 +75,11 @@ class CartScreenState extends State<CartScren> {
     });
     return Text(
         // '${cartList.map((e) => e['price'] * cartList.length ?? 0)}',
-        totalPrice == null ? null : "$totalPrice",
+        totalPrice == null
+            ? null
+            : reducedTotal != 0.0
+                ? "$reducedTotal"
+                : "$totalPrice",
         style: Constants.cartTotalPrice);
   }
 
@@ -345,10 +350,12 @@ class CartScreenState extends State<CartScren> {
                                                       setState(() {
                                                         if (prefs.containsKey(
                                                             'item')) {
-                                                          prefs.remove('item');
-                                                          cartList.clear();
-                                                          print(
-                                                              "Preferences cleared");
+                                                          cartList
+                                                              .removeAt(index);
+                                                          reducedTotal =
+                                                              totalPrice -
+                                                                  item[
+                                                                      'itemPrice'];
                                                         }
 
                                                         loading = false;

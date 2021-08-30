@@ -40,12 +40,10 @@ class SuccessScreen extends StatelessWidget {
                 padding:
                     const EdgeInsets.symmetric(horizontal: 15, vertical: 30),
                 child: Text(
-                    "Your order was successful. Kindly check you mail for evidence.",
+                    "Your order was successful. Kindly check your mail for evidence.",
                     textAlign: TextAlign.center,
-                    style: TextStyle(
-                        fontSize: 18,
-                        color: Colors.green,
-                        fontWeight: FontWeight.bold)),
+                    style: CustomTheme.propertyTextLight
+                        .copyWith(fontSize: 18, color: Colors.green)),
               ),
               Padding(
                 padding:

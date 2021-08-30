@@ -8,6 +8,7 @@ import 'package:afrimash/model/trending_products.dart';
 import 'package:afrimash/screens/products/product_listing.dart';
 import 'package:afrimash/screens/products/product_single.dart';
 import 'package:afrimash/service/featured_product_service.dart';
+import 'package:afrimash/service/get_product_category_service.dart';
 import 'package:afrimash/service/popular_categories_service.dart';
 import 'package:afrimash/service/product_variants_service.dart';
 import 'package:afrimash/service/trending_product_service.dart';
@@ -34,6 +35,8 @@ class ProductViewState extends State<ProductView> {
   ProductVariantsService productVariantsService = ProductVariantsService();
   TrendingProductService trendingProductService = TrendingProductService();
   FeaturedProductService featuredProductService = FeaturedProductService();
+  GetProductCategoriesService getProductCategoriesService =
+      GetProductCategoriesService();
   bool loading = false;
   SharedPreferences prefs;
   int cartLength = 0;
@@ -46,6 +49,24 @@ class ProductViewState extends State<ProductView> {
     getTrendingProducts();
     getFeaturedProducts();
     getCartLength();
+    getCategories();
+  }
+
+  getCategories() async {
+    setState(() => loading = true);
+    try {
+      var response =
+          await getProductCategoriesService.getIndexedProductCategory(9);
+      var success = response["success"];
+      if (success == false) {
+        setState(() => loading = false);
+      } else {
+        setState(() => loading = false);
+        print(response["message"]);
+      }
+    } catch (e) {
+      print(e.toString());
+    }
   }
 
   getCartLength() async {
@@ -230,36 +251,50 @@ class ProductViewState extends State<ProductView> {
                   child: SingleChildScrollView(
                       child: Column(children: [
                     // Categories(),
-                    Container(
-                        height: MediaQuery.of(context).size.height * 0.13,
-                        child: ListView.builder(
-                            scrollDirection: Axis.horizontal,
-                            itemCount: 5,
-                            itemBuilder: (BuildContext context, int index) {
-                              return Padding(
-                                padding: EdgeInsets.symmetric(
-                                    horizontal: 10.0, vertical: 5),
-                                child: Column(
-                                  children: [
-                                    Container(
-                                      width: 45,
-                                      height: 45,
-                                      decoration: BoxDecoration(
-                                          borderRadius:
-                                              BorderRadius.circular(50),
-                                          image: DecorationImage(
-                                              image: AssetImage(
-                                                  "assets/images/static/poultry.jpg"),
-                                              fit: BoxFit.cover)),
+                    getProductCategoriesService.getProductCategory.object ==
+                            null
+                        ? Loading()
+                        : Container(
+                            height: MediaQuery.of(context).size.height * 0.13,
+                            child: ListView.builder(
+                                scrollDirection: Axis.horizontal,
+                                itemCount: getProductCategoriesService
+                                        .getProductCategory.object.length ??
+                                    null,
+                                itemBuilder: (BuildContext context, int index) {
+                                  var indexedProduct =
+                                      getProductCategoriesService
+                                          .getProductCategory.object[index];
+                                  return Padding(
+                                    padding: EdgeInsets.symmetric(
+                                        horizontal: 10.0, vertical: 5),
+                                    child: Column(
+                                      children: [
+                                        Container(
+                                          width: 45,
+                                          height: 45,
+                                          decoration: BoxDecoration(
+                                              borderRadius:
+                                                  BorderRadius.circular(50),
+                                              image: DecorationImage(
+                                                  fit: BoxFit.cover,
+                                                  image: NetworkImage(indexedProduct
+                                                          .productImages.isEmpty
+                                                      ? "https://st3.depositphotos.com/23594922/31822/v/600/depositphotos_318221368-stock-illustration-missing-picture-page-for-website.jpg"
+                                                      : "${indexedProduct.productImages[0].imageUrl}"))),
+                                        ),
+                                        SizedBox(height: 3),
+                                        // text
+                                        Container(
+                                          width: 50,
+                                          child: Text('${indexedProduct.name}',
+                                              overflow: TextOverflow.ellipsis,
+                                              style: Constants.categoryStyle),
+                                        )
+                                      ],
                                     ),
-                                    SizedBox(height: 3),
-                                    // text
-                                    Text('Poultry',
-                                        style: Constants.categoryStyle)
-                                  ],
-                                ),
-                              );
-                            })),
+                                  );
+                                })),
                     ProductSlides(),
 
                     // trending products title

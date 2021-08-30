@@ -164,6 +164,7 @@ class PaymentState extends State<Payment> {
                       });
                     },
                     child: ListTile(
+                      contentPadding: EdgeInsets.zero,
                       title: Text("Debit / Credit Card (Immediate payment)"),
                       leading: Radio(
                         value: 1,
@@ -181,7 +182,7 @@ class PaymentState extends State<Payment> {
                     visible: selectedValue == 1 ? true : false,
                     child: Padding(
                       padding: const EdgeInsets.symmetric(
-                          horizontal: 50, vertical: 15),
+                          horizontal: 30, vertical: 15),
                       child: Container(
                         decoration: BoxDecoration(
                             border: Border.all(color: Colors.grey),
@@ -207,6 +208,7 @@ class PaymentState extends State<Payment> {
                       });
                     },
                     child: ListTile(
+                      contentPadding: EdgeInsets.zero,
                       title: Text("Bank Transfer"),
                       leading: Radio(
                         value: 2,
@@ -224,7 +226,7 @@ class PaymentState extends State<Payment> {
                     visible: selectedValue == 2 ? true : false,
                     child: Padding(
                       padding: const EdgeInsets.symmetric(
-                          horizontal: 50, vertical: 15),
+                          horizontal: 30, vertical: 15),
                       child: Container(
                         decoration: BoxDecoration(
                             border: Border.all(color: Colors.grey),
@@ -375,6 +377,7 @@ class PaymentState extends State<Payment> {
                       });
                     },
                     child: ListTile(
+                      contentPadding: EdgeInsets.zero,
                       title: Text("Wallet Payment"),
                       leading: Radio(
                         value: 3,
@@ -391,7 +394,7 @@ class PaymentState extends State<Payment> {
                   Visibility(
                     visible: selectedValue == 3 ? true : false,
                     child: Padding(
-                      padding: const EdgeInsets.only(left: 50),
+                      padding: const EdgeInsets.only(left: 30),
                       child: Container(
                         decoration: BoxDecoration(
                             border: Border.all(color: Colors.grey),
@@ -416,11 +419,11 @@ class PaymentState extends State<Payment> {
                   ),
                   Padding(
                     padding: const EdgeInsets.symmetric(
-                        horizontal: 50, vertical: 15),
+                        horizontal: 15, vertical: 15),
                     child: Divider(),
                   ),
                   Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 50),
+                    padding: const EdgeInsets.symmetric(horizontal: 15),
                     child: Text(
                       "Got an Afrimash coupon code(s)? Use it below:",
                       style: TextStyle(fontWeight: FontWeight.bold),
@@ -428,7 +431,7 @@ class PaymentState extends State<Payment> {
                   ),
                   Padding(
                     padding: const EdgeInsets.symmetric(
-                        horizontal: 50, vertical: 10),
+                        horizontal: 15, vertical: 10),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
@@ -465,7 +468,7 @@ class PaymentState extends State<Payment> {
                   ),
                   Padding(
                     padding: const EdgeInsets.symmetric(
-                        horizontal: 50, vertical: 10),
+                        horizontal: 15, vertical: 10),
                     child: RaisedButton(
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.all(Radius.circular(5))),
@@ -484,12 +487,12 @@ class PaymentState extends State<Payment> {
                   ),
                   Padding(
                     padding: const EdgeInsets.symmetric(
-                        horizontal: 50, vertical: 15),
+                        horizontal: 15, vertical: 15),
                     child: Divider(),
                   ),
                   Padding(
                     padding: const EdgeInsets.symmetric(
-                        horizontal: 50, vertical: 10),
+                        horizontal: 15, vertical: 10),
                     child: Column(
                       children: [
                         Row(

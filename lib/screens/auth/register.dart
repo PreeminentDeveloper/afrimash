@@ -1,4 +1,6 @@
 import 'package:afrimash/common/config/loading.dart';
+import 'package:afrimash/common/custom_state_dropdown.dart';
+import 'package:afrimash/common/state_file.dart';
 import 'package:afrimash/model/main_app_provider.dart';
 import 'package:afrimash/screens/auth/login.dart';
 import 'package:afrimash/screens/home/home.dart';
@@ -71,6 +73,7 @@ class _RegisterPageState extends BaseScreen<RegisterScreen>
   bool _isSubmitButtonEnabled = false;
   bool isVisible = true;
   bool confirmIsVisible = true;
+  var _selectedState;
 
   // bool _isFormValid() {
   //   return ((firstNameController.text != null &&
@@ -482,27 +485,46 @@ class _RegisterPageState extends BaseScreen<RegisterScreen>
                                         return validateField(value);
                                       },
                                     ),
-                                    TextFormField(
-                                      key: _stateKey,
-                                      controller: stateController,
-                                      autofillHints: [
-                                        AutofillHints.addressState
-                                      ],
-                                      autocorrect: false,
-                                      enableSuggestions: false,
-                                      textInputAction: TextInputAction.next,
-                                      keyboardType: TextInputType.streetAddress,
-                                      // onSubmitted: (_) => FocusScope.of(context)
-                                      //     .requestFocus(stateNode),
-                                      decoration: InputDecoration(
-                                          labelText: 'State',
-                                          hintText: 'Enter state'),
-                                      // onChanged: (value) {
-                                      //   _isSubmitButtonEnabled = _isFormValid();
-                                      // },
-                                      validator: (value) {
-                                        return validateField(value);
+                                    // TextFormField(
+                                    //   key: _stateKey,
+                                    //   controller: stateController,
+                                    //   autofillHints: [
+                                    //     AutofillHints.addressState
+                                    //   ],
+                                    //   autocorrect: false,
+                                    //   enableSuggestions: false,
+                                    //   textInputAction: TextInputAction.next,
+                                    //   keyboardType: TextInputType.streetAddress,
+                                    //   // onSubmitted: (_) => FocusScope.of(context)
+                                    //   //     .requestFocus(stateNode),
+                                    //   decoration: InputDecoration(
+                                    //       labelText: 'State',
+                                    //       hintText: 'Enter state'),
+                                    //   // onChanged: (value) {
+                                    //   //   _isSubmitButtonEnabled = _isFormValid();
+                                    //   // },
+                                    //   validator: (value) {
+                                    //     return validateField(value);
+                                    //   },
+                                    // ),
+                                    CustomStateDropdown(
+                                      textHint: "State",
+                                      isExpanded: true,
+                                      onTap: () => FocusManager
+                                          .instance.primaryFocus
+                                          .unfocus(),
+                                      items: StateFile.state
+                                          .map((e) => DropdownMenuItem<String>(
+                                              value: "${e['state']}",
+                                              child: Text("${e['state']}")))
+                                          .toList(),
+                                      onChanged: (value) {
+                                        setState(() {
+                                          this._selectedState = value;
+                                          print(_selectedState);
+                                        });
                                       },
+                                      value: _selectedState,
                                     ),
                                     TextFormField(
                                       key: _passwordFormKey,
@@ -593,7 +615,7 @@ class _RegisterPageState extends BaseScreen<RegisterScreen>
                                               // "secretAnswer":
                                               //     secretAnswerController.text,
                                               "email": emailController.text,
-                                              "state": stateController.text,
+                                              "state": _selectedState,
                                             };
                                             print(data);
                                             userSignup(data);

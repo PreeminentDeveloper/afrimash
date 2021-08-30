@@ -7,7 +7,7 @@ import '../products/product_home.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class HomeView extends StatefulWidget {
-  bool isOrder;
+  bool isOrder = false;
   HomeView({this.isOrder});
 
   MainAppProvider get mainProvider => null;
@@ -29,7 +29,8 @@ class HomeViewState extends State<HomeView> {
   clearOrder() async {
     setState(() => loading = true);
     prefs = await SharedPreferences.getInstance();
-    if (widget.isOrder = true) {
+    print("IS ORDER: ${widget.isOrder}");
+    if (widget.isOrder == true) {
       json.decode(prefs.getString('item'));
       prefs.remove('item');
       print("Ordered Item cleared!");
