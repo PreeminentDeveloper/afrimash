@@ -18,6 +18,7 @@ import 'package:inspireui/widgets/loading.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:transparent_image/transparent_image.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 import 'cart.dart';
 
@@ -196,8 +197,8 @@ class ProductViewState extends State<ProductView> {
                   title: Container(
                       height: 70.0,
                       // width: 70.0,
-                      child: Image.asset(
-                        'assets/images/logo.png',
+                      child: SvgPicture.asset(
+                        'assets/images/logo.svg',
                       )),
                   leading: InkWell(
                       onTap: () => _drawerKey.currentState.openDrawer(),
