@@ -334,136 +334,136 @@ class ProductSingleState extends State<ProductSingle> {
                                                     data: widget.data)));
                                       })),
 
-                              SizedBox(height: 15),
-                              // description
-                              DefaultTabController(
-                                length: 2,
-                                child: Container(
-                                    height: MediaQuery.of(context).size.height *
-                                        0.3,
-                                    child: Column(
-                                      children: <Widget>[
-                                        Container(
-                                          constraints:
-                                              BoxConstraints(maxHeight: 150.0),
-                                          child: Material(
-                                            color: Colors.transparent,
-                                            child: Container(
-                                              color: Colors.transparent,
-                                              child: TabBar(
-                                                labelPadding: EdgeInsets.zero,
-                                                indicatorPadding:
-                                                    EdgeInsets.zero,
-                                                indicator: BoxDecoration(
-                                                  border: Border(
-                                                      bottom: BorderSide(
-                                                          color: Color(
-                                                              0xff00854e))),
-                                                  color: Colors.transparent,
-                                                ),
-                                                onTap: (int data) {
-                                                  setState(() {
-                                                    tabIndex = data;
-                                                  });
-                                                },
-                                                tabs: [
-                                                  Tab(
-                                                    child: Container(
-                                                      margin: EdgeInsets.only(
-                                                          right: 2.5),
-                                                      decoration: BoxDecoration(
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(50),
-                                                        // color: tabIndex == 0
-                                                        //     ? Constants.primaryColor
-                                                        //     : CustomColors.WhiteSmoke
-                                                      ),
-                                                      child: Align(
-                                                        alignment:
-                                                            Alignment.center,
-                                                        child: Text(
-                                                          "Description",
-                                                          style: TextStyle(
-                                                              color: tabIndex ==
-                                                                      0
-                                                                  ? Constants
-                                                                      .primaryColor
-                                                                  : Constants
-                                                                      .inactiveColor,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .w400),
-                                                        ),
-                                                      ),
-                                                    ),
-                                                  ),
-                                                  Tab(
-                                                    child: Container(
-                                                      margin: EdgeInsets.only(
-                                                          left: 2.5),
-                                                      decoration: BoxDecoration(
-                                                        borderRadius:
-                                                            BorderRadius.circular(
-                                                                50), // Creates border
-                                                        // color: tabIndex == 1
-                                                        //     ? CustomColors.primaryColor4
-                                                        //     : CustomColors.WhiteSmoke
-                                                      ),
-                                                      child: Align(
-                                                        alignment:
-                                                            Alignment.center,
-                                                        child: Text("Review",
-                                                            style: TextStyle(
-                                                                color: tabIndex ==
-                                                                        1
-                                                                    ? Constants
-                                                                        .primaryColor
-                                                                    : Constants
-                                                                        .inactiveColor,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .w400)),
-                                                      ),
-                                                    ),
-                                                  ),
-                                                ],
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                        SizedBox(height: 20),
-                                        Expanded(
-                                          child: TabBarView(
-                                            // physics: NeverScrollableScrollPhysics(),
-                                            children: [
-                                              SingleChildScrollView(
-                                                  child: Description(
-                                                      "${widget.data.description}")),
-                                              SingleChildScrollView(
-                                                  child: Column(children: [
-                                                Align(
-                                                    alignment:
-                                                        Alignment.centerLeft,
-                                                    child: TextButton.icon(
-                                                        onPressed: () {},
-                                                        icon: Icon(Icons.edit,
-                                                            color: Constants
-                                                                .primaryColor,
-                                                            size: 15),
-                                                        label: Text(
-                                                            'Write a review',
-                                                            style: TextStyle(
-                                                                color: Constants
-                                                                    .primaryColor)))),
-                                                Reviews()
-                                              ])),
-                                            ],
-                                          ),
-                                        ),
-                                      ],
-                                    )),
-                              ),
+                              // SizedBox(height: 15),
+                              // // description
+                              // DefaultTabController(
+                              //   length: 2,
+                              //   child: Container(
+                              //       height: MediaQuery.of(context).size.height *
+                              //           0.3,
+                              //       child: Column(
+                              //         children: <Widget>[
+                              //           Container(
+                              //             constraints:
+                              //                 BoxConstraints(maxHeight: 150.0),
+                              //             child: Material(
+                              //               color: Colors.transparent,
+                              //               child: Container(
+                              //                 color: Colors.transparent,
+                              //                 child: TabBar(
+                              //                   labelPadding: EdgeInsets.zero,
+                              //                   indicatorPadding:
+                              //                       EdgeInsets.zero,
+                              //                   indicator: BoxDecoration(
+                              //                     border: Border(
+                              //                         bottom: BorderSide(
+                              //                             color: Color(
+                              //                                 0xff00854e))),
+                              //                     color: Colors.transparent,
+                              //                   ),
+                              //                   onTap: (int data) {
+                              //                     setState(() {
+                              //                       tabIndex = data;
+                              //                     });
+                              //                   },
+                              //                   tabs: [
+                              //                     Tab(
+                              //                       child: Container(
+                              //                         margin: EdgeInsets.only(
+                              //                             right: 2.5),
+                              //                         decoration: BoxDecoration(
+                              //                           borderRadius:
+                              //                               BorderRadius
+                              //                                   .circular(50),
+                              //                           // color: tabIndex == 0
+                              //                           //     ? Constants.primaryColor
+                              //                           //     : CustomColors.WhiteSmoke
+                              //                         ),
+                              //                         child: Align(
+                              //                           alignment:
+                              //                               Alignment.center,
+                              //                           child: Text(
+                              //                             "Description",
+                              //                             style: TextStyle(
+                              //                                 color: tabIndex ==
+                              //                                         0
+                              //                                     ? Constants
+                              //                                         .primaryColor
+                              //                                     : Constants
+                              //                                         .inactiveColor,
+                              //                                 fontWeight:
+                              //                                     FontWeight
+                              //                                         .w400),
+                              //                           ),
+                              //                         ),
+                              //                       ),
+                              //                     ),
+                              //                     Tab(
+                              //                       child: Container(
+                              //                         margin: EdgeInsets.only(
+                              //                             left: 2.5),
+                              //                         decoration: BoxDecoration(
+                              //                           borderRadius:
+                              //                               BorderRadius.circular(
+                              //                                   50), // Creates border
+                              //                           // color: tabIndex == 1
+                              //                           //     ? CustomColors.primaryColor4
+                              //                           //     : CustomColors.WhiteSmoke
+                              //                         ),
+                              //                         child: Align(
+                              //                           alignment:
+                              //                               Alignment.center,
+                              //                           child: Text("Review",
+                              //                               style: TextStyle(
+                              //                                   color: tabIndex ==
+                              //                                           1
+                              //                                       ? Constants
+                              //                                           .primaryColor
+                              //                                       : Constants
+                              //                                           .inactiveColor,
+                              //                                   fontWeight:
+                              //                                       FontWeight
+                              //                                           .w400)),
+                              //                         ),
+                              //                       ),
+                              //                     ),
+                              //                   ],
+                              //                 ),
+                              //               ),
+                              //             ),
+                              //           ),
+                              //           SizedBox(height: 20),
+                              //           Expanded(
+                              //             child: TabBarView(
+                              //               // physics: NeverScrollableScrollPhysics(),
+                              //               children: [
+                              //                 SingleChildScrollView(
+                              //                     child: Description(
+                              //                         "${widget.data.description}")),
+                              //                 SingleChildScrollView(
+                              //                     child: Column(children: [
+                              //                   Align(
+                              //                       alignment:
+                              //                           Alignment.centerLeft,
+                              //                       child: TextButton.icon(
+                              //                           onPressed: () {},
+                              //                           icon: Icon(Icons.edit,
+                              //                               color: Constants
+                              //                                   .primaryColor,
+                              //                               size: 15),
+                              //                           label: Text(
+                              //                               'Write a review',
+                              //                               style: TextStyle(
+                              //                                   color: Constants
+                              //                                       .primaryColor)))),
+                              //                   Reviews()
+                              //                 ])),
+                              //               ],
+                              //             ),
+                              //           ),
+                              //         ],
+                              //       )),
+                              // ),
                             ],
                           ))
                     ])),
