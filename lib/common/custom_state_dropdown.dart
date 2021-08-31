@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 class CustomStateDropdown extends StatelessWidget {
   final String textHint;
+  final Color hintStyleColor;
   final String errorText;
   final List items;
   final double width;
@@ -15,6 +16,7 @@ class CustomStateDropdown extends StatelessWidget {
       this.onTap,
       this.width,
       this.textHint,
+      this.hintStyleColor,
       this.errorText,
       this.items,
       this.value,
@@ -35,10 +37,7 @@ class CustomStateDropdown extends StatelessWidget {
           child: DropdownButtonHideUnderline(
             child: DropdownButton<String>(
               onTap: onTap,
-              hint: Text(
-                textHint,
-                // style: TextStyle(color: Colors.grey.shade400),
-              ),
+              hint: Text(textHint, style: TextStyle(color: hintStyleColor)),
               items: items,
               isExpanded: isExpanded,
               onChanged: onChanged,

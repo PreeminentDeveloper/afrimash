@@ -108,7 +108,7 @@ class AddressState extends State<Address> {
               // SizedBox(
               //   height: 10,
               // ),
-              widget.activeUserState != null
+              widget.activeUserState == null
                   ? Visibility(
                       visible: isVisible == false ? true : false,
                       child: GestureDetector(
@@ -119,17 +119,32 @@ class AddressState extends State<Address> {
                         },
                         child: CustomStateDropdown(
                           textHint: "State",
+                          hintStyleColor: Colors.grey.shade400,
                           isExpanded: true,
                           value: widget.activeUserState,
                           items: null,
                         ),
                       ),
                     )
-                  : null,
+                  : Visibility(
+                      visible: isVisible == false ? true : false,
+                      child: GestureDetector(
+                        onTap: () {
+                          setState(() {
+                            isVisible = true;
+                          });
+                        },
+                        child: CustomStateDropdown(
+                          textHint: widget.activeUserState,
+                          isExpanded: true,
+                          items: null,
+                        ),
+                      ),
+                    ),
               Visibility(
                 visible: isVisible,
                 child: CustomStateDropdown(
-                  textHint: "State",
+                  textHint: "Select state",
                   isExpanded: true,
                   onTap: () => FocusManager.instance.primaryFocus.unfocus(),
                   items: StateFile.state

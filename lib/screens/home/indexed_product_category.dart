@@ -112,14 +112,16 @@ class _IndexedProductCategoryState extends State<IndexedProductCategory> {
                                               id: indexedProduct.id,
                                               name: indexedProduct.name,
                                               price: indexedProduct.price,
-                                              // productImages: indexedProduct.productImages,
+                                              productImages:
+                                                  indexedProduct.productImages,
                                               description:
                                                   indexedProduct.description);
-                                          // Navigator.push(
-                                          //     context,
-                                          //     MaterialPageRoute(
-                                          //         builder: (context) => ProductSingle(
-                                          //             data: featProduct)));
+                                          Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      ProductSingle(
+                                                          data: featProduct)));
                                         },
                                         child: Container(
                                             width: MediaQuery.of(context)

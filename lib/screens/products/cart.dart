@@ -67,12 +67,12 @@ class CartScreenState extends State<CartScren> {
   // }
 
   Widget totalWidget({index, quantity}) {
-    setState(() {
-      loading = true;
-      // totalPrice = quantity * itemPrice;
-      quantity = quantity;
-      loading = false;
-    });
+    // setState(() {
+    //   loading = true;
+    // totalPrice = quantity * itemPrice;
+    quantity = quantity;
+    //   loading = false;
+    // });
     return Text(
         // '${cartList.map((e) => e['price'] * cartList.length ?? 0)}',
         totalPrice == null

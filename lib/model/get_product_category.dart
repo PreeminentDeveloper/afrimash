@@ -4,6 +4,8 @@
 
 import 'dart:convert';
 
+import 'package:afrimash/model/trending_products.dart';
+
 GetProductCategory getProductCategoryFromJson(String str) =>
     GetProductCategory.fromJson(json.decode(str));
 
@@ -247,8 +249,8 @@ class Category {
       };
 }
 
-class ProductImages {
-  ProductImages({
+class ProductImage {
+  ProductImage({
     this.position,
     this.imageUrl,
     this.id,
@@ -258,7 +260,7 @@ class ProductImages {
   String imageUrl;
   int id;
 
-  factory ProductImages.fromJson(Map<String, dynamic> json) => ProductImages(
+  factory ProductImage.fromJson(Map<String, dynamic> json) => ProductImage(
         position: json["position"],
         imageUrl: json["imageUrl"],
         id: json["id"],
