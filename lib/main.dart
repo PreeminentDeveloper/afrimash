@@ -32,7 +32,7 @@ class _MyAppState extends State<MyApp> {
       title: 'Afrimash',
       theme: ThemeData(
         fontFamily: 'Feather',
-        primarySwatch: Colors.blue,
+        primaryColor: Color(0xff00854e),
       ),
       home: HomeView(),
       routes: {
