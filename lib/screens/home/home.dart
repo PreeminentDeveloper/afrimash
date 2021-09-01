@@ -60,6 +60,7 @@ class HomeViewState extends State<HomeView> {
       body: Container(child: _children[_currentIndex]),
       bottomNavigationBar: BottomNavigationBar(
         onTap: onTabTapped,
+        selectedItemColor: Color(0xff00854e),
         currentIndex:
             _currentIndex, // this will be set when a new tab is tapped
         items: [

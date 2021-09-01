@@ -199,6 +199,7 @@ dependency_overrides:
   modal_bottom_sheet: 2.0.0
   args: 2.1.0
   analyzer: ^0.41.2
+  async: 2.5.0
 
 # Run this script to generate the app icon: flutter pub run flutter_launcher_icons:main
 flutter_icons:
@@ -236,6 +237,7 @@ flutter:
       fonts:
         - asset: assets/fonts/SF-Pro-Display-Semibold.otf
           weight: 700
+
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

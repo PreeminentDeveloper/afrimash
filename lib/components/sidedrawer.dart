@@ -7,6 +7,7 @@ import 'package:afrimash/screens/home/home.dart';
 import 'package:afrimash/screens/products/browsing_histor.dart';
 import 'package:afrimash/screens/products/cart.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:inspireui/widgets/loading.dart';
@@ -113,8 +114,9 @@ class _SideDrawerState extends State<SideDrawer> {
                                 Container(
                                     height: 100.0,
                                     // width: 70.0,
-                                    child: Image.asset(
-                                      'assets/images/logo.png',
+                                    child: SvgPicture.asset(
+                                      'assets/images/logo.svg',
+                                      width: 110,
                                     )),
                               ])))),
                           SizedBox(height: 20),
@@ -161,15 +163,16 @@ class _SideDrawerState extends State<SideDrawer> {
                                 MaterialPageRoute(
                                     builder: (context) => SpecialOrder())),
                           ),
-                          ListTile(
-                            leading: const Icon(Icons.shopping_bag, size: 20),
-                            title: Text('Browsing History'),
-                            // onTap: () => pushNavigation(RouteList.cart),
-                            onTap: () => Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => BrowsingHistory())),
-                          ),
+                          // TODO: Implement browsing history.
+                          // ListTile(
+                          //   leading: const Icon(Icons.shopping_bag, size: 20),
+                          //   title: Text('Browsing History'),
+                          //   // onTap: () => pushNavigation(RouteList.cart),
+                          //   onTap: () => Navigator.push(
+                          //       context,
+                          //       MaterialPageRoute(
+                          //           builder: (context) => BrowsingHistory())),
+                          // ),
                           ListTile(
                             leading: const Icon(Icons.contact_mail_outlined,
                                 size: 20),

@@ -74,11 +74,13 @@ class _ContactUSState extends State<ContactUS> {
                       InkWell(
                           onTap: () =>
                               customLaunch("mailto:info@afrimash.com", context),
-                          child: Text("info@afrimash.com")),
+                          child: Text("info@afrimash.com",
+                              style: TextStyle(color: Color(0xff00854e)))),
                       InkWell(
                           onTap: () => customLaunch(
                               "mailto:support@afrimash.com", context),
-                          child: Text("support@afrimash.com")),
+                          child: Text("support@afrimash.com",
+                              style: TextStyle(color: Color(0xff00854e)))),
                       SizedBox(
                         height: 20,
                       ),
@@ -93,18 +95,16 @@ class _ContactUSState extends State<ContactUS> {
                       InkWell(
                         onTap: () =>
                             customLaunch("tel:+234 809 409 1115", context),
-                        child: Text(
-                          "+234 809 409 1115,",
-                          textAlign: TextAlign.center,
-                        ),
+                        child: Text("+234 809 409 1115,",
+                            textAlign: TextAlign.center,
+                            style: TextStyle(color: Color(0xff00854e))),
                       ),
                       InkWell(
                         onTap: () =>
                             customLaunch("tel:+234 808 280 8271", context),
-                        child: Text(
-                          "+234 808 280 8271",
-                          textAlign: TextAlign.center,
-                        ),
+                        child: Text("+234 808 280 8271",
+                            textAlign: TextAlign.center,
+                            style: TextStyle(color: Color(0xff00854e))),
                       ),
                     ],
                   ),

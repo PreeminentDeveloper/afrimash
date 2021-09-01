@@ -82,7 +82,7 @@ class _AboutUsState extends State<AboutUs> {
                       height: 20,
                     ),
                     Text(
-                      "Afrimash is an eCommerce platform where manufacturers, distributors and large scale farmers register to sell farm inputs to farmers As an eCommerce platform, our goal is to make agriculture convenient for everyone and we do so by providing the following services: \n- Farm Inputs Supply (equipment, seeds, livestock, vaccines, insecticides and more) /n- Online Training \n- Access to loan via our partners such as NIRSAL \nWe have about 20000 users registered on our platform, over 1500 products on our website and about 400 registered vendors. \nYou can know more about Afrimash and our services via the link below:",
+                      "Afrimash is an eCommerce platform where manufacturers, distributors and large scale farmers register to sell farm inputs to farmers As an eCommerce platform, our goal is to make agriculture convenient for everyone and we do so by providing the following services: \n- Farm Inputs Supply (equipment, seeds, livestock, vaccines, insecticides and more) \n- Online Training \n- Access to loan via our partners such as NIRSAL \n \nWe have about 20000 users registered on our platform, over 1500 products on our website and about 400 registered vendors. \n \nYou can know more about Afrimash and our services via the link below:",
                     ),
                     InkWell(
                       onTap: () =>
