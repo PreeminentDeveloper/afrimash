@@ -317,7 +317,7 @@ class ProductViewState extends State<ProductView> {
                                     context,
                                     MaterialPageRoute(
                                         builder: (context) => ProductListing(
-                                            trendingProductService
+                                            products: trendingProductService
                                                 .trendingProduct)));
                               },
                               child: Text('See All', style: Constants.linkText))
@@ -421,7 +421,8 @@ class ProductViewState extends State<ProductView> {
                                         context,
                                         MaterialPageRoute(
                                             builder: (context) =>
-                                                ProductListing(product)));
+                                                ProductListing(
+                                                    products: product)));
                                   },
                                   child: Text('See All',
                                       style: Constants.linkText))
@@ -617,8 +618,9 @@ class ProductViewState extends State<ProductView> {
                                         MaterialPageRoute(
                                             builder: (context) =>
                                                 ProductListing(
-                                                    trendingProductService
-                                                        .trendingProduct)));
+                                                    products:
+                                                        trendingProductService
+                                                            .trendingProduct)));
                                   },
                                   child: Text('See All',
                                       style: Constants.linkText))
@@ -730,7 +732,8 @@ class ProductViewState extends State<ProductView> {
                                         context,
                                         MaterialPageRoute(
                                             builder: (context) =>
-                                                ProductListing(product)));
+                                                ProductListing(
+                                                    products: product)));
                                   },
                                   child: Text('See All',
                                       style: Constants.linkText))

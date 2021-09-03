@@ -54,6 +54,7 @@ dependencies:
   # STATE MANAGEMENT
   provider: 5.0.0
   get_it: 6.1.1
+  get: ^4.3.8
   event_bus: 2.0.0
 
   # SPLASH SCREEN, ONBOARDING
@@ -237,7 +238,6 @@ flutter:
       fonts:
         - asset: assets/fonts/SF-Pro-Display-Semibold.otf
           weight: 700
-
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

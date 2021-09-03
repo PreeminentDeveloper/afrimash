@@ -3,6 +3,7 @@ import 'package:afrimash/model/main_app_provider.dart';
 import 'package:afrimash/screens/Orders/checkout/checkout.dart';
 import 'package:afrimash/screens/auth/register.dart';
 import 'package:afrimash/screens/home/home.dart';
+import 'package:afrimash/screens/products/product_listing.dart';
 import 'package:afrimash/service/get_logged_in_details_service.dart';
 import 'package:afrimash/service/login_service.dart';
 import 'package:afrimash/widgets/common/login_animation.dart';
@@ -17,17 +18,19 @@ import 'package:dropdown_banner/dropdown_banner.dart';
 import '../../common/base/base_screen.dart';
 
 class LoginScreenArgument {
-  final bool fromCart;
+  final bool fromCart, fromProductListing;
   final MainAppProvider mainAppProvider;
 
-  LoginScreenArgument({@required this.fromCart, this.mainAppProvider});
+  LoginScreenArgument(
+      {@required this.fromCart, this.fromProductListing, this.mainAppProvider});
 }
 
 class LoginScreen extends StatefulWidget {
   final bool fromCart;
   final MainAppProvider mainAppProvider;
 
-  LoginScreen({this.fromCart = false, this.mainAppProvider});
+  LoginScreen(
+      {this.fromCart = false,this.mainAppProvider});
 
   @override
   _LoginPageState createState() => _LoginPageState();

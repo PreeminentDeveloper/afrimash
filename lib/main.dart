@@ -11,6 +11,7 @@ import 'package:afrimash/screens/products/product_home.dart';
 import 'package:afrimash/screens/products/product_single.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+// import 'package:get/get.dart';
 
 void main() {
   runApp(ChangeNotifierProvider(

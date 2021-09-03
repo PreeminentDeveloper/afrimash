@@ -1,6 +1,8 @@
 import 'package:afrimash/components/cartFloatingButton.dart';
 import 'package:afrimash/model/trending_products.dart';
+import 'package:afrimash/screens/auth/login.dart';
 import 'package:afrimash/screens/products/cart.dart';
+import 'package:afrimash/service/add_to_wishlist.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
@@ -10,7 +12,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class ProductListing extends StatefulWidget {
   final List<Product> products;
-  ProductListing(this.products);
+  ProductListing({this.products});
 
   @override
   State<StatefulWidget> createState() {
@@ -23,6 +25,8 @@ class ProductListingState extends State<ProductListing> {
   int cartLength = 0;
   SharedPreferences prefs;
   bool loading = false;
+  bool isFavourite = false;
+  AddToWishlist addToWishlist = AddToWishlist();
 
   initState() {
     super.initState();
@@ -38,6 +42,22 @@ class ProductListingState extends State<ProductListing> {
       cartLength = 0;
     }
     setState(() => loading = false);
+  }
+
+  addItemToWishlist(data) async {
+    setState(() => loading = true);
+    try {
+      var response = await addToWishlist.addToWishlist(data);
+      var success = response["success"];
+      if (success == false) {
+        setState(() => loading = false);
+      } else {
+        setState(() => loading = false);
+        print(response["message"]);
+      }
+    } catch (e) {
+      print(e.toString());
+    }
   }
 
   Widget build(BuildContext context) {
@@ -112,19 +132,50 @@ class ProductListingState extends State<ProductListing> {
                                           crossAxisAlignment:
                                               CrossAxisAlignment.end,
                                           children: [
-                                            Container(
-                                                decoration: BoxDecoration(
-                                                    color: Colors.grey[200]
-                                                        .withOpacity(0.8),
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            20)),
-                                                padding: EdgeInsets.all(5),
-                                                child: Icon(
-                                                    Icons
-                                                        .favorite_outline_rounded,
-                                                    size: 20,
-                                                    color: Colors.grey))
+                                            InkWell(
+                                              onTap: () async {
+                                                prefs = await SharedPreferences
+                                                    .getInstance();
+                                                setState(() {
+                                                  if (prefs
+                                                      .containsKey('token')) {
+                                                    isFavourite = !isFavourite;
+                                                    Map<String, dynamic> data =
+                                                        {
+                                                      "customerId": 10,
+                                                      "productId": widget
+                                                          .products[index].id,
+                                                    };
+                                                    addItemToWishlist(data);
+                                                  } else {
+                                                    Navigator.push(
+                                                        context,
+                                                        MaterialPageRoute(
+                                                            builder: (context) =>
+                                                                LoginScreen()));
+                                                  }
+                                                });
+                                              },
+                                              child: Container(
+                                                  decoration: BoxDecoration(
+                                                      color: isFavourite
+                                                          ? Colors.white
+                                                          : Colors.grey[200]
+                                                              .withOpacity(0.8),
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              20)),
+                                                  padding: EdgeInsets.all(5),
+                                                  child: Icon(
+                                                      isFavourite
+                                                          ? Icons.favorite_sharp
+                                                          : Icons
+                                                              .favorite_outline_rounded,
+                                                      size: 20,
+                                                      color: isFavourite
+                                                          ? Colors.pink
+                                                          : Colors.grey)),
+                                            )
                                           ],
                                         )),
                                     SizedBox(height: 10),

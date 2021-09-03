@@ -7,11 +7,13 @@ import 'package:afrimash/model/cart_model.dart';
 import 'package:afrimash/model/main_app_provider.dart';
 import 'package:afrimash/model/trending_products.dart';
 import 'package:afrimash/screens/products/cart.dart';
+import 'package:afrimash/screens/products/product_home.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:inspireui/widgets/loading.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:transparent_image/transparent_image.dart';
+// import 'package:get/get.dart';
 
 class ProductSingle extends StatefulWidget {
   final Product data;
@@ -207,6 +209,7 @@ class ProductSingleState extends State<ProductSingle> {
                           icon: Icon(Icons.arrow_back),
                           onPressed: () {
                             Navigator.pop(context);
+                            // Get.to(ProductView());
                           }),
                       expandedHeight: 220.0,
                       floating: true,
