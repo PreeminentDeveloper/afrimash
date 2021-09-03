@@ -7,6 +7,7 @@ import 'package:afrimash/screens/account/my_wish_list.dart';
 import 'package:afrimash/screens/auth/login.dart';
 import 'package:afrimash/screens/products/browsing_histor.dart';
 import 'package:afrimash/service/get_logged_in_details_service.dart';
+import 'package:afrimash/service/get_wishlist.dart';
 import 'package:afrimash/service/register_service.dart';
 import 'package:flutter/material.dart';
 import 'package:inspireui/widgets/loading.dart';
@@ -26,6 +27,7 @@ class SettingsState extends State<Settings> {
   SharedPreferences prefs;
   String token;
   GetLoggedInDetailsService user = GetLoggedInDetailsService();
+  GetWIshlist getWIshlist = GetWIshlist();
 
   @override
   void initState() {
@@ -42,6 +44,23 @@ class SettingsState extends State<Settings> {
       print(token);
     }
     setState(() => loading = false);
+  }
+
+  getWishlistData() async {
+    // setState(() => loading = true);
+    try {
+      var response = await getWIshlist.getWIshlist(11)();
+      print("Get Wishlist: $response");
+      var success = response["success"];
+      if (success == false) {
+        // setState(() => loading = false);
+      } else {
+        // setState(() => loading = false);
+        print(response["message"]);
+      }
+    } catch (e) {
+      print(e.toString());
+    }
   }
 
   void _displayMessage(message, context, Color color) {
@@ -137,6 +156,7 @@ class SettingsState extends State<Settings> {
                         trailing: Icon(Icons.keyboard_arrow_right),
                         // onTap: () => pushNavigation(RouteList.cart),
                         onTap: () {
+                          getWishlistData();
                           // Navigator.push(
                           //     context,
                           //     MaterialPageRoute(

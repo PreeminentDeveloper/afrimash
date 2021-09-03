@@ -27,6 +27,7 @@ class ProductListingState extends State<ProductListing> {
   bool loading = false;
   bool isFavourite = false;
   AddToWishlist addToWishlist = AddToWishlist();
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   initState() {
     super.initState();
@@ -52,6 +53,7 @@ class ProductListingState extends State<ProductListing> {
       if (success == false) {
         setState(() => loading = false);
       } else {
+        _displayMessage("Item added to wishlist", context, Colors.blue);
         setState(() => loading = false);
         print(response["message"]);
       }
@@ -60,8 +62,32 @@ class ProductListingState extends State<ProductListing> {
     }
   }
 
+  void _displayMessage(message, context, Color color) {
+    /// Showing Error messageSnackBarDemo
+    /// Ability so close message
+    final snackBar = SnackBar(
+      backgroundColor: color,
+      content: Text(message),
+      duration: const Duration(seconds: 10),
+      action: SnackBarAction(
+        label: 'Close',
+        textColor: Colors.black,
+        onPressed: () {
+          // Some code to undo the change.
+        },
+      ),
+    );
+
+    _scaffoldKey.currentState
+      // ignore: deprecated_member_use
+      ..removeCurrentSnackBar()
+      // ignore: deprecated_member_use
+      ..showSnackBar(snackBar);
+  }
+
   Widget build(BuildContext context) {
     return Scaffold(
+        key: _scaffoldKey,
         backgroundColor: Colors.white,
         appBar: AppBar(
             leading: InkWell(
